@@ -24,9 +24,14 @@
 
 
 
-- #### Comando para enviar os arquivos: `git push -u origin main`
+- #### Comando para enviar os arquivos: `git push`
 
 ------------
+
+![](https://cdn.discordapp.com/attachments/719306782396121139/822527383282253924/unknown.png)
+
+------------
+
 
 # Atenção
 
