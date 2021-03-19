@@ -12,7 +12,7 @@
 ------------
 
 
-- #### Tema: A decidir...
+- #### Tema: Site para otimização dos estudos.
 
 ------------
 
