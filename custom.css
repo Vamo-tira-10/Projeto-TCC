@@ -1,0 +1,37 @@
+html {
+    height: 100%;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+img {
+    min-width: 100px;
+    max-width: 350px;
+    text-align: center;
+}
+
+.is-primary {
+    background-color: hsl(171, 100%, 41%);
+    color: #eee;
+}
+
+.is-info {
+    background-color: hsl(204, 86%, 53%);
+    color: #eee;
+}
+
+.is-primary .title, .is-info .title {
+    color: #eee;
+}
+
+figure img {
+    width: 100%;
+}
+
+.section {
+    margin-top: auto;
+}
