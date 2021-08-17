@@ -35,7 +35,7 @@
             </div>
         </div>
     </nav>
-    <main class="hero is-primary is-medium">
+    <main class="hero is-primary is-normal">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-vcentered is-centered">
@@ -66,7 +66,7 @@
                             <p class="title">Flash Cards</p>
                         </div>
                         <div class="content has-text-centered">
-                            Ferramenta simples e útil para memorização de perguntas.
+                                Ferramenta simples e útil para memorização de perguntas.
                         </div>
                         <div class="field">
                             <a class="button is-primary is-fullwidth">Criar</a>
@@ -126,13 +126,23 @@
                     </div>
                     <div class="column is-4">
                         <form action="" class="box">
+                            <label class="label">Nome de usuário</label>
                             <div class="field">
-                                <label class="label">Nome de usuário</label>
-                                <input type="text" class="input" placeholder="Nome">
+                                <p class="control has-icons-left">
+                                    <input type="text" class="input is-primary" placeholder="Nome">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
                             </div>
+                            <label class="label">Senha</label>
                             <div class="field">
-                                <label class="label">Nome de usuário</label>
-                                <input type="text" class="input" placeholder="Nome">
+                                <p class="control has-icons-left">
+                                    <input type="text" class="input is-primary" placeholder="Senha">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </p>
                             </div>
                             <div class="field has-text-centered">
                                 <a class="button is-primary">Cadastrar-se</a>
@@ -143,7 +153,7 @@
             </div>
         </div>
     </section>
-    <div class="section is-primary is-hidden-mobile">
+    <div class="section is-primario is-hidden-mobile">
         <div class="level">
             <div class="level-item has-text-centered">
                 <div>
@@ -178,6 +188,8 @@
         </div>
     </div>
     <script src="./index.js"></script>
+    <script src="https://kit.fontawesome.com/f4d0ea89b3.js" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 </body>
 
 </html>
