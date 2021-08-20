@@ -21,4 +21,5 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
+    ScrollReveal().reveal('.hero-body, .section .columns, .level', {distance: '40px', origin: 'left', delay: 400, viewFactor: 0.4, mobile: false})
 })
