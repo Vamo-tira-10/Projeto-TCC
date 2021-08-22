@@ -21,5 +21,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         })
     }
-    ScrollReveal().reveal('.hero-body, .section .columns, .level', {distance: '40px', origin: 'left', delay: 400, viewFactor: 0.4, mobile: false})
+    window.sr = ScrollReveal()
+
+    sr.reveal('.hero-body', {
+        origin: 'left',
+        distance: '40px'
+    })
+
+    sr.reveal('.card', {
+        origin: 'left',
+        distance: '40px',
+        viewFactor: 0.3
+    })
+
+    sr.reveal('.form', {
+        origin: 'left',
+        distance: '40px',
+        viewFactor: 0.7
+    })
+
+    sr.reveal('.level', {
+        origin: 'left',
+        distance: '40px',
+        viewFactor: 0.7
+    })
 })

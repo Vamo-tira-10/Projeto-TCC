@@ -47,3 +47,19 @@ div img {
     flex-direction: column;
     justify-content: space-between;
 }
+
+html.sr .card {
+    visibility: hidden;
+}
+
+html.sr .hero-body {
+    visibility: hidden;
+}
+
+html.sr .form {
+    visibility: hidden;
+}
+
+html.sr .level {
+    visibility: hidden;
+}
