@@ -23,6 +23,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     window.sr = ScrollReveal()
 
+    sr.reveal('body', {
+        duration: 0
+    })
+
     sr.reveal('.hero-body', {
         origin: 'left',
         distance: '40px'

@@ -63,3 +63,7 @@ html.sr .form {
 html.sr .level {
     visibility: hidden;
 }
+
+html.sr body {
+    visibility: hidden;
+}
