@@ -1,47 +1,13 @@
-<!DOCTYPE html>
-<html lang="en" class="has-navbar-fixed-top sr">
-    
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Página teste</title>
-        <link rel="stylesheet" href="./bulma.min.css">
-        <link rel="stylesheet" href="./custom.css">
-        <script src="./scrollreveal.min.js"></script>      
-</head>
-
+<%- include('./partials/head.ejs') %>
 <body>
-    <nav class="navbar has-shadow is-fixed-top">
-        <div class="navbar-brand">
-            <a class="navbar-item">
-                <p class="title">Estudy</p>
-            </a>
-            <a class="navbar-burger" data-target="nav-links">
-                <span></span>
-                <span></span>
-                <span></span>
-            </a>
-        </div>
-        <div class="navbar-menu" id="nav-links">
-            <div class="navbar-end">
-                <div class="buttons navbar-item">
-                    <a class="button is-primary">
-                        <strong>Entrar</strong>
-                    </a>
-                    <a class="button is-light">
-                        <strong>Cadastrar</strong>
-                    </a>
-                </div>
-            </div>
-        </div>
-    </nav>
+    <%- include('./partials/navbar.ejs') %>
     <main class="hero is-primary is-normal">
         <div class="hero-body">
             <div class="container">
+                <div class="lds-dual-ring"></div>
                 <div class="columns is-vcentered is-centered">
                     <div class="column has-text-centered">
-                        <img src="./undraw_studying_s3l7.svg" alt="">
+                        <img src="/img/estude.svg" alt="">
                     </div>
                     <div class="column has-text-centered-mobile">
                         <div class="content">
@@ -59,7 +25,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="has-text-centered">
-                            <img src="./undraw_card_postal_5wvw.svg" alt="Placeholder image">
+                            <img src="/img/flash_card.svg" alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -79,7 +45,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="has-text-centered">
-                            <img src="./undraw_learning_2q1h.svg" alt="Placeholder image">
+                            <img src="/img/caderno_virtual.svg" alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -99,7 +65,7 @@
                 <div class="card">
                     <div class="card-image">
                         <figure class="has-text-centered">
-                            <img src="./undraw_events_2p66.svg" alt="Placeholder image">
+                            <img src="/img/agenda.svg" alt="Placeholder image">
                         </figure>
                     </div>
                     <div class="card-content">
@@ -146,7 +112,7 @@
                                 </p>
                             </div>
                             <div class="field has-text-centered">
-                                <a class="button is-primary">Cadastrar-se</a>
+                                <a class="button is-primary mt-1">Cadastrar-se</a>
                             </div>
                         </form>
                     </div>
@@ -188,8 +154,8 @@
             </div>
         </div>
     </div>
-    <script src="https://kit.fontawesome.com/f4d0ea89b3.js" crossorigin="anonymous"></script>
-    <script src="./index.js"></script>
+    
+    <%- include('./partials/footer.ejs') %>
 </body>
 
 </html>

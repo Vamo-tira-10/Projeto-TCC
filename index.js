@@ -1,52 +1,20 @@
-document.addEventListener('DOMContentLoaded', () => {
+//Importando módulo e instanciando o módulo do Express
+const express = require('express')
+const app = express()
 
-    // Get all "navbar-burger" elements
-    const $navbarBurgers = Array.prototype.slice.call(document.querySelectorAll('.navbar-burger'), 0)
+//Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
+app.set('view engine', 'ejs')
 
-    // Check if there are any navbar burgers
-    if ($navbarBurgers.length > 0) {
+//Configurando Express para usar alguns middlewares:
+app.use(express.static('public')) //Middleware de conteúdo estático (CSS, JS)
+app.use(express.urlencoded({extended:false})) //Middleware para interpretar o body das requisições (Formulários)
 
-        // Add a click event on each of them
-        $navbarBurgers.forEach(el => {
-            el.addEventListener('click', () => {
+//Rota principal (Home)
+app.get('/', (req, res) => {
+    res.render('index')
+})
 
-                // Get the target from the "data-target" attribute
-                const target = el.dataset.target
-                const $target = document.getElementById(target)
-
-                // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-                el.classList.toggle('is-active')
-                $target.classList.toggle('is-active')
-
-            })
-        })
-    }
-    window.sr = ScrollReveal()
-
-    sr.reveal('body', {
-        duration: 0
-    })
-
-    sr.reveal('.hero-body', {
-        origin: 'left',
-        distance: '40px'
-    })
-
-    sr.reveal('.card', {
-        origin: 'left',
-        distance: '40px',
-        viewFactor: 0.3
-    })
-
-    sr.reveal('.form', {
-        origin: 'left',
-        distance: '40px',
-        viewFactor: 0.7
-    })
-
-    sr.reveal('.level', {
-        origin: 'left',
-        distance: '40px',
-        viewFactor: 0.7
-    })
+//Iniciando servidor na porta 5050
+app.listen(5050, () => {
+    console.log('Servidor executando')
 })
