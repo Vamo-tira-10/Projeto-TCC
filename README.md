@@ -18,18 +18,11 @@
 
 # Como funciona?
 
-- #### Comando para puxar os arquivos mais recentes: `git pull origin main`
-
-
-
-
-
-- #### Comando para enviar os arquivos: `git push origin main`
-
-
-
-
-
+- #### Passo a passo para adicionar o(s) seu(s) arquivo(s): 
+`git pull origin main`
+`git add .`
+`git commit -m "Sua alteração aqui".`
+`git push origin main`
 
 
 # Atenção
