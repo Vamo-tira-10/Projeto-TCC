@@ -1,0 +1,48 @@
+<%- include('../../partials/head.ejs') %>
+<body>
+    <%- include('../../partials/navbar_user.ejs') %>
+    <div class="hero is-primary is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-6">
+                        <form class="box" action="/users/login" method="POST">
+                            <div class="field">
+                                <label class="label">Título do Caderno Virtual</label>
+                                <div class="control">
+                                    <input class="input" type="email" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Anotações do Caderno Virtual</label>
+                                <div class="control">
+                                    <textarea class="textarea" name="body" id="notebook" placeholder="Digite as suas anotações"></textarea>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <button class="button is-primary"> 
+                                    <strong>
+                                        Criar
+                                    </strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            language: 'pt_BR',
+            selector: '#notebook',
+            plugins: [
+                'advlist autolink link image lists print preview hr searchreplace wordcount fullscreen insertdatetime media save table paste emoticons'  
+            ]
+        })
+    </script>
+    <%- include('../../partials/footer.ejs') %>
+</body>

@@ -1,26 +1,17 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Página não encontrada</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <style>
-        img {
-            height: 15rem;
-        }
-    </style>
-</head>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+<style>
+    img {
+        height: 15rem;
+    }
+</style>
 <body>
-
     <div class="hero is-light is-fullheight">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-12 is-flex is-justify-content-center">
 
-                        <img src="404.svg">
+                        <img src="/img/404.svg">
 
                     </div>
                 </div>
@@ -33,13 +24,12 @@
 
                 <div class="columns is-centered">
                     <div class="column is-12 has-text-centered">
-                        <a href="/404" class="button is-warning px-5 py-5"><strong>Home</strong></a>
+                        <a href="/" class="button is-warning px-5 py-5"><strong>Home</strong></a>
                     </div>
                 </div>
 
             </div>
         </div>
     </div>
-    
+    <%- include('./partials/footer.ejs') %>
 </body>
-</html>

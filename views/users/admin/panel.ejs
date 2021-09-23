@@ -1,0 +1,103 @@
+<%- include('../../partials/head.ejs') %>
+<link rel="stylesheet" href="%SOME-LOCAL-PATH%/bulma-responsive-tables/css/main.min.css">
+<body>
+    <%- include('../../partials/navbar_user.ejs') %>
+    <main class="hero is-primary is-normal">
+        <div class="hero-body">
+            <div class="container">
+                <div class="lds-dual-ring"></div>
+                <div class="columns is-vcentered is-centered">
+                    <div class="column has-text-centered">
+                        <img class="presentation" src="/img/adm.svg" alt="">
+                    </div>
+                    <div class="column has-text-centered-mobile">
+                        <div class="content">
+                            <p class="title">Painel de administração</p>
+                            <p class="subtitle">Tenha acesso ao fluxo de usuários do sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="section">
+        <div class="container">
+            <div class="b-table">
+                <div class="table-wrapper has-mobile-cards">
+                    <table class="table is-fullwidth is-striped is-hoverable is-fullwidth has-text-centered">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Logado</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>André</td>
+                                <td>Não</td>
+                                <td class="is-actions-cell">
+                                    <div class="buttons is-centered">
+                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
+                                        <span class="icon"><i class="fas fa-times"></i></span>
+                                      </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>André</td>
+                                <td>Não</td>
+                                <td class="is-actions-cell">
+                                    <div class="buttons is-centered">
+                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
+                                        <span class="icon"><i class="fas fa-times"></i></span>
+                                      </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>André</td>
+                                <td>Não</td>
+                                <td class="is-actions-cell">
+                                    <div class="buttons is-centered">
+                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
+                                        <span class="icon"><i class="fas fa-times"></i></span>
+                                      </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section is-primario">
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários Registrados
+                    </p>
+                    <p class="title">
+                        0
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários Logados
+                    </p>
+                    <p class="title">
+                        0
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/f4d0ea89b3.js" crossorigin="anonymous"></script>
+    <%- include('../../partials/footer.ejs') %>
+</body>
+
+</html>

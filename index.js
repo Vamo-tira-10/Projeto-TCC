@@ -14,6 +14,34 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 
+app.get('/users/login', (req, res) => {
+    res.render('users/login')
+})
+
+app.get('/users/panel', (req, res) => {
+    res.render('users/panel')
+})
+
+app.get('/users/panel/flashcards/new', (req, res) => {
+    res.render('users/flashcards/new')
+})
+
+app.get('/users/panel/notebook/new', (req, res) => {
+    res.render('users/notebook/new')
+})
+
+app.get('/users/panel/schedule/new', (req, res) => {
+    res.render('users/schedule/new')
+})
+
+app.get('/admin/panel', (req, res) => {
+    res.render('users/admin/panel')
+})
+
+app.get('/*', (req, res) => {
+    res.render('404')
+})
+
 //Iniciando servidor na porta 5050
 app.listen(5050, () => {
     console.log('Servidor executando')

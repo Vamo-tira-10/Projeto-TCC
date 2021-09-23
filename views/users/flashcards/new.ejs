@@ -1,37 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
-    <title>Entrar</title>
-</head>
-
+<%- include('../../partials/head.ejs') %>
 <body>
-    <div class="hero is-primary is-fullheight">
+    <%- include('../../partials/navbar_user.ejs') %>
+    <div class="hero is-primary is-fullheight-with-navbar">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-6">
                         <form class="box" action="/users/login" method="POST">
                             <div class="field">
-                                <label class="label" for="">E-mail</label>
+                                <label class="label">Pergunta do Flash Card</label>
                                 <div class="control">
                                     <input class="input" type="email" required>
                                 </div>
                             </div>
 
                             <div class="field">
-                                <label class="label" for="">Senha</label>
+                                <label class="label">Resposta do Flash Card</label>
                                 <div class="control">
                                     <input class="input" type="password" required>
                                 </div>
                             </div>
 
                             <div class="field">
-                                <button class="button is-primary"> <strong>Entrar</strong></button>
+                                <button class="button is-primary"> 
+                                    <strong>
+                                        Criar
+                                    </strong>
+                                </button>
                             </div>
                         </form>
                     </div>
@@ -39,7 +34,5 @@
             </div>
         </div>
     </div>
-
+    <%- include('../../partials/footer.ejs') %>
 </body>
-
-</html>
