@@ -65,6 +65,10 @@ html.sr .level {
     visibility: hidden;
 }
 
+html.sr .table {
+    visibility: hidden;
+}
+
 .presentation {
     max-width: 300px;
 }

@@ -47,4 +47,10 @@ window.addEventListener('load', () => {
         distance: '40px',
         viewFactor: 0.7
     })
+
+    sr.reveal('.table', {
+        origin: 'left',
+        distance: '40px',
+        viewFactor: 0.7
+    })
 })
