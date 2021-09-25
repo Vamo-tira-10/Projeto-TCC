@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.3/css/bulma.min.css">
+    <title>Cadastrar Usuário</title>
+</head>
+<body>
+    <div class="hero is-primary is-fullheight">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-6">
+                        <form class="box" action="/users/new" method="POST">
+                            <div class="field">
+                                <label class="label" text="Nome">
+
+                                </label>
+
+                                <div class="control">
+                                    <input class="input" type="text" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label" text="E-mail">
+
+                                </label>
+
+                                <div class="control">
+                                    <input class="input" type="email" required>
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <label class="label" text="Senha">
+
+                                </label>
+
+                                <div class="control">
+                                    <input class="input" type="password" required>
+                                </div>
+                            </div>
+                            
+                            <div class="field">
+                                <button class="button is-primary">
+                                    <strong>Cadastrar</strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
