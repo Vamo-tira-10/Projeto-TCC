@@ -129,7 +129,12 @@
             </div>
         </div>
     </div>
-    
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        socket.id = 'usuario'
+        socket.emit('quemsou', {id: socket.id})
+    </script>
     <%- include('../partials/footer.ejs') %>
 </body>
 

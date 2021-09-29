@@ -1,6 +1,24 @@
-//Importando módulo e instanciando o módulo do Express
+//Importando módulo e instanciando o Express
 const express = require('express')
 const app = express()
+const server = require('http').createServer(app)
+const { Server } = require('socket.io')
+const io = new Server(server)
+
+let contador = 0
+
+io.on('connection', (socket) => {
+    socket.on('quemsou', (data) => {
+        if (data.id == 'usuario') {
+            contador++
+            io.emit('atualizaContador', {contador: contador})
+            socket.on('disconnect', () => {
+                contador--
+                io.emit('atualizaContador', {contador: contador})
+            })
+        }
+    })
+})
 
 //Importando rotas do usuário
 const userController = require('./users/userController')
@@ -28,6 +46,6 @@ app.get('/*', (req, res) => {
 })
 
 //Iniciando servidor na porta 5050
-app.listen(5050, () => {
+server.listen(5050, () => {
     console.log('Servidor executando')
 })

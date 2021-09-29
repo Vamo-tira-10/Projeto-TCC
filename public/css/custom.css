@@ -72,3 +72,7 @@ html.sr .table {
 .presentation {
     max-width: 300px;
 }
+
+.table td, .table th {
+    vertical-align: middle;
+}

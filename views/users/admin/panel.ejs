@@ -23,45 +23,46 @@
         <div class="container">
             <div class="b-table">
                 <div class="table-wrapper has-mobile-cards">
-                    <table class="table is-fullwidth is-striped is-hoverable is-bordered is-fullwidth has-text-centered">
+                    <table class="table is-fullwidth is-striped is-hoverable is-fullwidth has-text-centered">
                         <thead>
                             <tr>
                                 <th>Nome</th>
-                                <th>Logado</th>
+                                <th>E-mail</th>
+                                <th>Apelido</th>
                                 <th>Ações</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td>André</td>
-                                <td>Não</td>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-centered">
-                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
-                                        <span class="icon"><i class="fas fa-times"></i></span>
-                                      </button>
+                                        <a class="button is-info">Editar</a>
+                                        <a class="button is-danger">Excluir</a>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>André</td>
-                                <td>Não</td>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-centered">
-                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
-                                        <span class="icon"><i class="fas fa-times"></i></span>
-                                      </button>
+                                        <a class="button is-info">Editar</a>
+                                        <a class="button is-danger">Excluir</a>
                                     </div>
                                 </td>
                             </tr>
                             <tr>
-                                <td>André</td>
-                                <td>Não</td>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
                                 <td class="is-actions-cell">
                                     <div class="buttons is-centered">
-                                      <button class="button is-small is-danger jb-modal" data-target="sample-modal" type="button">
-                                        <span class="icon"><i class="fas fa-times"></i></span>
-                                      </button>
+                                        <a class="button is-info">Editar</a>
+                                        <a class="button is-danger">Excluir</a>
                                     </div>
                                 </td>
                             </tr>
@@ -86,9 +87,9 @@
             <div class="level-item has-text-centered">
                 <div>
                     <p class="heading">
-                        Usuários Logados
+                        Usuários Ativos
                     </p>
-                    <p class="title">
+                    <p class="title contador">
                         0
                     </p>
                 </div>
@@ -96,6 +97,14 @@
         </div>
     </div>
     <script src="https://kit.fontawesome.com/f4d0ea89b3.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        socket.on('atualizaContador', (data) => {
+            const contador = document.querySelector('.contador')
+            contador.innerHTML = data.contador
+        })
+    </script>
     <%- include('../../partials/footer.ejs') %>
 </body>
 
