@@ -131,7 +131,7 @@
     </div>
     <script src="/socket.io/socket.io.js"></script>
     <script>
-        const socket = io()
+        const socket = io('http://localhost:5050')
         socket.id = 'usuario'
         socket.emit('quemsou', {id: socket.id})
     </script>

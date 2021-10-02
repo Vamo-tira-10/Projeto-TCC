@@ -8,6 +8,7 @@ const io = new Server(server)
 let contador = 0
 
 io.on('connection', (socket) => {
+    console.log('a')
     socket.on('quemsou', (data) => {
         if (data.id == 'usuario') {
             contador++
@@ -21,10 +22,10 @@ io.on('connection', (socket) => {
 })
 
 //Importando rotas do usuário
-const userController = require('./users/userController')
+const userController = require('./controllers/userController')
 
 //Importando rotas do admin
-const adminController = require('./users/admin/adminController')
+const adminController = require('./controllers/adminController')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
