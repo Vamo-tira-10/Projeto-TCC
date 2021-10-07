@@ -8,7 +8,7 @@ const io = new Server(server)
 let contador = 0
 
 io.on('connection', (socket) => {
-    console.log('a')
+    io.emit('atualizaContador', {contador: contador})
     socket.on('quemsou', (data) => {
         if (data.id == 'usuario') {
             contador++
