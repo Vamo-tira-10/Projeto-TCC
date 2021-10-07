@@ -1,11 +1,11 @@
 <%- include('../../partials/head.ejs') %>
-<body>
+<body class="has-background-primary">
     <%- include('../../partials/navbar_user.ejs') %>
     <div class="hero is-primary is-fullheight-with-navbar">
         <div class="hero-body">
             <div class="container">
                 <div class="columns is-centered">
-                    <div class="column is-6">
+                    <div class="column is-12">
                         <form class="box" action="/users/login" method="POST">
                             <div class="field">
                                 <label class="label">Título do Caderno Virtual</label>
@@ -22,7 +22,7 @@
                             </div>
 
                             <div class="field">
-                                <button class="button is-primary"> 
+                                <button class="button is-primary is-fullwidth"> 
                                     <strong>
                                         Criar
                                     </strong>
