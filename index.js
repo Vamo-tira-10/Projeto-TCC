@@ -49,4 +49,5 @@ app.get('/*', (req, res) => {
 //Iniciando servidor na porta 5050
 server.listen(5050, () => {
     console.log('Servidor executando')
+    console.log('http://localhost:5050')
 })
