@@ -13,7 +13,7 @@
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="text" placeholder="Nome" required>
+                                    <input class="input" type="text" placeholder="Nome" id="name">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -26,7 +26,7 @@
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="email" placeholder="E-mail" required>
+                                    <input class="input" type="email" placeholder="E-mail" id="email">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -39,7 +39,7 @@
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="password" placeholder="Senha" required>
+                                    <input class="input" type="password" placeholder="Senha" id="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
@@ -58,5 +58,34 @@
         </div>
     </div>
     <%- include('../partials/footer.ejs') %>
+    <script>
+        const form = document.querySelector('form')
+        form.onsubmit = (e) => {
+            e.preventDefault()
+            const name = document.querySelector('#name').value
+            const email = document.querySelector('#email').value
+            const password = document.querySelector('#password').value
+            if (validator.isEmpty(name) || validator.isEmpty(email) || validator.isEmpty(password)) {
+                form.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                form.style.transform = 'translate3d(0, 0, 0)';
+                form.style.backfaceVisibility = 'hidden';
+                form.style.perspective = '1000px';
+                if (document.querySelector('.notification') == undefined) {
+                    bulmaToast.toast({
+                        message: 'Preencha todos os campos!',
+                        type: 'is-danger',
+                        duration: 3000,
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    })
+                }
+            }
+        }
+        form.onanimationend = (e) => {
+            form.style.animation = '';
+            form.style.transform = '';
+            form.style.backfaceVisibility = '';
+            form.style.perspective = '';
+        }
+    </script>
 </body>
 </html>
