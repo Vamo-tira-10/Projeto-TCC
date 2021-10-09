@@ -19,7 +19,7 @@ const app = express()
 const server = require('http').createServer(app)
 const https = require('https').createServer(credentials, app);
 const { Server } = require('socket.io')
-const io = new Server(server)
+const io = new Server(https)
 let contador = 0
 
 io.on('connection', (socket) => {
@@ -57,7 +57,6 @@ app.use('/', adminController) //Middleware para usar as rotas do admin
 //Rota principal (Home)
 app.get('/', redirecionaHttps, (req, res) => {
     res.render('index')
-    req.url
 })
 
 //Rota de erro 404
