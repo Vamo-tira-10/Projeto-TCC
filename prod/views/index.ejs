@@ -92,27 +92,36 @@
                         </div>
                     </div>
                     <div class="column is-4">
-                        <form action="" class="box">
+                        <form action="" class="box" method="post">
                             <label class="label">Nome de usuário</label>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input type="text" class="input is-primary" placeholder="Nome">
+                                    <input type="text" class="input is-primary" placeholder="Nome" name="name" id="name">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <label class="label">E-mail</label>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input type="email" class="input is-primary" placeholder="E-mail" name="email" id="email">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-envelope"></i>
                                     </span>
                                 </p>
                             </div>
                             <label class="label">Senha</label>
                             <div class="field">
                                 <p class="control has-icons-left">
-                                    <input type="text" class="input is-primary" placeholder="Senha">
+                                    <input type="password" class="input is-primary" placeholder="Senha" name="password" id="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
                                 </p>
                             </div>
                             <div class="field has-text-centered">
-                                <a class="button is-primary mt-4 is-fullwidth">Cadastrar-se</a>
+                                <button class="button is-primary mt-4 is-fullwidth">Cadastrar-se</button>
                             </div>
                         </form>
                     </div>
@@ -156,6 +165,35 @@
     </div>
     
     <%- include('./partials/footer.ejs') %>
+    <script>
+        const form = document.querySelector('form')
+        form.onsubmit = (e) => {
+            e.preventDefault()
+            const name = document.querySelector('#name').value
+            const email = document.querySelector('#email').value
+            const password = document.querySelector('#password').value
+            if (validator.isEmpty(name) || validator.isEmpty(email) || validator.isEmpty(password)) {
+                form.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                form.style.transform = 'translate3d(0, 0, 0)';
+                form.style.backfaceVisibility = 'hidden';
+                form.style.perspective = '1000px';
+                if (document.querySelector('.notification') == undefined) {
+                    bulmaToast.toast({
+                        message: 'Preencha todos os campos!',
+                        type: 'is-danger',
+                        duration: 3000,
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    })
+                }
+            }
+        }
+        form.onanimationend = (e) => {
+            form.style.animation = '';
+            form.style.transform = '';
+            form.style.backfaceVisibility = '';
+            form.style.perspective = '';
+        }
+    </script>
 </body>
 
 </html>
