@@ -4,9 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "css-build": "node-sass --omit-source-map-url public/sass/style.scss public/css/style.css",
-    "dev": "npm run css-build && nodemon ./dev/index.js",
-    "prod": "npm run css-build && nodemon ./prod/index.js"
+    "start": "nodemon index.js"
   },
   "repository": {
     "type": "git",
@@ -32,9 +30,7 @@
     "validator": "^13.6.0"
   },
   "devDependencies": {
-    "bulma": "^0.9.3",
     "bulma-toast": "^2.4.1",
-    "node-sass": "^6.0.1",
     "nodemon": "^2.0.12"
   }
 }
