@@ -19,8 +19,7 @@ const app = express()
 const server = require('http').createServer(app)
 const https = require('https').createServer(credentials, app);
 const { Server } = require('socket.io')
-const io = new Server(https)
-
+const io = new Server(server)
 let contador = 0
 
 io.on('connection', (socket) => {
@@ -43,6 +42,9 @@ const userController = require('./controllers/userController')
 //Importando rotas do admin
 const adminController = require('./controllers/adminController')
 
+//Importando middleware de redirecionamento https
+const redirecionaHttps = require('./middlewares/redirecionaHttps')
+
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
 
@@ -51,21 +53,15 @@ app.use(express.static('public')) //Middleware de conteúdo estático (CSS, JS)
 app.use(express.urlencoded({ extended: false })) //Middleware para interpretar o body das requisições (Formulários)
 app.use('/', userController) //Middleware para usar as rotas do usuário
 app.use('/', adminController) //Middleware para usar as rotas do admin
-app.use((req, res, next) => {
-    if (req.secure) {
-        next()
-    } else {
-        res.redirect('https://' + req.headers.host + req.url);
-    }
-})
 
 //Rota principal (Home)
-app.get('/', (req, res) => {
+app.get('/', redirecionaHttps, (req, res) => {
     res.render('index')
+    req.url
 })
 
 //Rota de erro 404
-app.get('/*', (req, res) => {
+app.get('/*', redirecionaHttps, (req, res) => {
     res.render('404')
 })
 

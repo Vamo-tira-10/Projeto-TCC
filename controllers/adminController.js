@@ -2,8 +2,10 @@
 const express = require('express')
 const router = express.Router()
 
+const redirecionaHttps = require('../middlewares/redirecionaHttps')
+
 //Rota de painel do admin
-router.get('/admin/panel', (req, res) => {
+router.get('/admin/panel', redirecionaHttps, (req, res) => {
     res.render('users/admin/panel')
 })
 
