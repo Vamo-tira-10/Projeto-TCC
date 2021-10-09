@@ -65,7 +65,7 @@
             const name = document.querySelector('#name').value
             const email = document.querySelector('#email').value
             const password = document.querySelector('#password').value
-            if (validator.isEmpty(email) || validator.isEmpty(password)) {
+            if (validator.isEmpty(name) || validator.isEmpty(email) || validator.isEmpty(password)) {
                 form.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
                 form.style.transform = 'translate3d(0, 0, 0)';
                 form.style.backfaceVisibility = 'hidden';
