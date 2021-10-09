@@ -1,0 +1,38 @@
+<%- include('../../partials/head.ejs') %>
+<body>
+    <%- include('../../partials/navbar_user.ejs') %>
+    <div class="hero is-primary is-fullheight-with-navbar">
+        <div class="hero-body">
+            <div class="container">
+                <div class="columns is-centered">
+                    <div class="column is-6">
+                        <form class="box" action="" method="POST">
+                            <div class="field">
+                                <label class="label">Pergunta do Flash Card</label>
+                                <div class="control">
+                                    <input class="input" type="text" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <label class="label">Resposta do Flash Card</label>
+                                <div class="control">
+                                    <input class="input" type="text" required>
+                                </div>
+                            </div>
+
+                            <div class="field">
+                                <button class="button is-primary mt-4 is-fullwidth"> 
+                                    <strong>
+                                        Criar
+                                    </strong>
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <%- include('../../partials/footer.ejs') %>
+</body>

@@ -20,6 +20,7 @@ const server = require('http').createServer(app)
 const https = require('https').createServer(credentials, app);
 const { Server } = require('socket.io')
 const io = new Server(https)
+
 let contador = 0
 
 io.on('connection', (socket) => {
@@ -47,6 +48,7 @@ const redirecionaHttps = require('./middlewares/redirecionaHttps')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
+app.set('views', './prod/views')
 
 //Configurando Express para usar alguns middlewares:
 app.use(express.static('public')) //Middleware de conteúdo estático (CSS, JS)
@@ -70,5 +72,4 @@ server.listen(80, () => {
 
 //Iniciando servidor na porta 443 (com o protocolo https)
 https.listen(443, () => {
-    console.log('sajodsjao')
 })

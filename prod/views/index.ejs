@@ -1,0 +1,161 @@
+<%- include('./partials/head.ejs') %>
+<body>
+    <%- include('./partials/navbar.ejs') %>
+    <main class="hero is-primary is-normal">
+        <div class="hero-body">
+            <div class="container">
+                <div class="lds-dual-ring"></div>
+                <div class="columns is-vcentered is-centered">
+                    <div class="column has-text-centered">
+                        <img src="/img/estude.svg" alt="">
+                    </div>
+                    <div class="column has-text-centered-mobile">
+                        <div class="content">
+                            <p class="title">Otimize seus estudos</p>
+                            <p class="subtitle">Não perca seu tempo com coisas desnecessárias</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="section">
+        <div class="columns">
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="has-text-centered">
+                            <img src="/img/flash_card.svg" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media-content has-text-centered pb-4">
+                            <p class="title">Flash Cards</p>
+                        </div>
+                        <div class="content has-text-centered">
+                                Ferramenta simples e útil para memorização de perguntas.
+                        </div>
+                        <div class="field">
+                            <a class="button is-primary is-fullwidth">Criar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="has-text-centered">
+                            <img src="/img/caderno_virtual.svg" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media-content has-text-centered pb-4">
+                            <p class="title">Caderno Virtual</p>
+                        </div>
+                        <div class="content has-text-centered">
+                            Crie suas próprias anotações enquanto estuda.
+                        </div>
+                        <div class="field">
+                            <a class="button is-primary is-fullwidth">Criar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="column is-4">
+                <div class="card">
+                    <div class="card-image">
+                        <figure class="has-text-centered">
+                            <img src="/img/agenda.svg" alt="Placeholder image">
+                        </figure>
+                    </div>
+                    <div class="card-content">
+                        <div class="media-content has-text-centered pb-4">
+                            <p class="title">Agenda</p>
+                        </div>
+                        <div class="content has-text-centered">
+                            Programe e organize a sua rotina de estudo.
+                        </div>
+                        <div class="field">
+                            <a class="button is-primary is-fullwidth">Criar</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="section form">
+            <div class="container">
+                <div class="columns is-centered is-vcentered has-text-centered-mobile">
+                    <div class="column is-6">
+                        <div class="content">
+                            <p class="title">Comece a estudar agora mesmo</p>
+                            <p class="subtitle">Crie sua conta totalmente grátis</p>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <form action="" class="box">
+                            <label class="label">Nome de usuário</label>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input type="text" class="input is-primary" placeholder="Nome">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-user"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <label class="label">Senha</label>
+                            <div class="field">
+                                <p class="control has-icons-left">
+                                    <input type="text" class="input is-primary" placeholder="Senha">
+                                    <span class="icon is-small is-left">
+                                        <i class="fas fa-lock"></i>
+                                    </span>
+                                </p>
+                            </div>
+                            <div class="field has-text-centered">
+                                <a class="button is-primary mt-4 is-fullwidth">Cadastrar-se</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section is-primario is-hidden-mobile">
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários
+                    </p>
+                    <p class="title">
+                        120K+
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários
+                    </p>
+                    <p class="title">
+                        120K+
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários
+                    </p>
+                    <p class="title">
+                        120K+
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <%- include('./partials/footer.ejs') %>
+</body>
+
+</html>

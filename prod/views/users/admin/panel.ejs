@@ -1,0 +1,108 @@
+<%- include('../../partials/head.ejs') %>
+<body>
+    <%- include('../../partials/navbar_user.ejs') %>
+    <main class="hero is-primary is-normal">
+        <div class="hero-body">
+            <div class="container">
+                <div class="lds-dual-ring"></div>
+                <div class="columns is-vcentered is-centered">
+                    <div class="column has-text-centered">
+                        <img class="presentation" src="/img/adm.svg" alt="">
+                    </div>
+                    <div class="column has-text-centered-mobile">
+                        <div class="content">
+                            <p class="title">Painel de administração</p>
+                            <p class="subtitle">Tenha acesso ao fluxo de usuários do sistema</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <section class="section">
+        <div class="container">
+            <div class="b-table">
+                <div class="table-wrapper has-mobile-cards">
+                    <table class="table is-fullwidth is-striped is-hoverable is-fullwidth has-text-centered">
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>E-mail</th>
+                                <th>Apelido</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
+                                <td class="is-actions-cell is-justify-content-center">
+                                    <div class="button is-centered is-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
+                                <td class="is-actions-cell is-justify-content-center">
+                                    <div class="button is-centered is-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td data-label="Nome">André</td>
+                                <td data-label="E-mail">gamera103@gmail.com</td>
+                                <td data-label="Apelido">Dedé</td>
+                                <td class="is-actions-cell is-justify-content-center">
+                                    <div class="button is-centered is-danger">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="section is-primario">
+        <div class="level">
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários Registrados
+                    </p>
+                    <p class="title">
+                        0
+                    </p>
+                </div>
+            </div>
+            <div class="level-item has-text-centered">
+                <div>
+                    <p class="heading">
+                        Usuários Ativos
+                    </p>
+                    <p class="title contador">
+                        0
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://kit.fontawesome.com/f4d0ea89b3.js" crossorigin="anonymous"></script>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+        const socket = io()
+        socket.on('atualizaContador', (data) => {
+            const contador = document.querySelector('.contador')
+            contador.innerHTML = data.contador
+        })
+    </script>
+    <%- include('../../partials/footer.ejs') %>
+</body>
+
+</html>
