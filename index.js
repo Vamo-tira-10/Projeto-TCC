@@ -30,6 +30,14 @@ const userController = require('./controllers/userController')
 //Importando rotas do admin
 const adminController = require('./controllers/adminController')
 
+const connection = require('./database/connection')
+
+connection.authenticate().then(() => {
+    console.log('Conectado ao banco com sucesso!')
+}).catch(err => {
+    console.log(err)
+})
+
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
 
