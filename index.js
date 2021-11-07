@@ -38,8 +38,8 @@ connection.authenticate().then(() => {
     console.log(err)
 })
 
+//Importando model de Usuário
 const User = require('./models/User')
-const FlashCard = require('./models/FlashCard')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
@@ -50,6 +50,7 @@ app.use(session({
     secret: 'asjodjaso',
     resave: false,
     saveUninitialized: true,
+    rolling: true,
     cookie: {
         maxAge: 60000
     }
@@ -62,7 +63,9 @@ app.use('/', adminController) //Middleware para usar as rotas do admin
 
 //Rota principal (Home)
 app.get('/', (req, res) => {
-    res.render('index')
+    let success = req.flash('success')
+    success = (success == undefined || success.length == 0) ? undefined : success
+    res.render('index', { success })
 })
 
 //Rota de erro 404

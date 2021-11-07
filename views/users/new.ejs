@@ -6,14 +6,14 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-6">
-                        <form class="box" action="/users/new" method="POST">
+                        <form class="box" action="/users/save" method="POST">
                             <div class="field">
                                 <label class="label">
                                     Nome
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="text" placeholder="Nome" id="name">
+                                    <input class="input" type="text" name="name" placeholder="Nome" id="name">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-user"></i>
                                     </span>
@@ -26,7 +26,7 @@
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="email" placeholder="E-mail" id="email">
+                                    <input class="input" type="email" name="email" placeholder="E-mail" id="email">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-envelope"></i>
                                     </span>
@@ -39,7 +39,7 @@
                                 </label>
 
                                 <div class="control has-icons-left">
-                                    <input class="input" type="password" placeholder="Senha" id="password">
+                                    <input class="input" type="password" name="password" placeholder="Senha" id="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
@@ -78,6 +78,9 @@
                         animate: { in: 'fadeIn', out: 'fadeOut' }
                     })
                 }
+            }
+            else {
+                form.submit()
             }
         }
         form.onanimationend = (e) => {

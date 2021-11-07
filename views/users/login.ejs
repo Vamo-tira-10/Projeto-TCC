@@ -6,7 +6,7 @@
             <div class="container">
                 <div class="columns is-centered">
                     <div class="column is-6">
-                        <form class="box" action="/users/login" method="POST">
+                        <form class="box" action="/users/auth" method="POST">
                             <div class="field">
                                 <label class="label" for="">E-mail</label>
                                 <div class="control has-icons-left">
@@ -37,6 +37,16 @@
         </div>
     </div>
     <%- include('../partials/footer.ejs') %>
+    <% if (error) { %>
+        <script>
+            bulmaToast.toast({
+                message: '<%= error %>',
+                type: 'is-danger',
+                duration: 3000,
+                animate: { in: 'fadeIn', out: 'fadeOut' }
+            })
+        </script>
+    <% } %>
     <script>
         const form = document.querySelector('form')
         form.onsubmit = (e) => {
@@ -56,6 +66,9 @@
                         animate: { in: 'fadeIn', out: 'fadeOut' }
                     })
                 }
+            }
+            else {
+                form.submit()
             }
         }
         form.onanimationend = (e) => {

@@ -165,6 +165,16 @@
     </div>
     
     <%- include('./partials/footer.ejs') %>
+    <% if (success) { %>
+        <script>
+            bulmaToast.toast({
+                message: '<%= success %>',
+                type: 'is-info',
+                duration: 3000,
+                animate: { in: 'fadeIn', out: 'fadeOut' }
+            })
+        </script>
+    <% } %>
     <script>
         const form = document.querySelector('form')
         form.onsubmit = (e) => {
