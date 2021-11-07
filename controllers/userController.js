@@ -9,39 +9,55 @@ const userAuth = require('../middlewares/userAuth')
 
 //Rota de cadastro de usuários
 router.get('/users/new', (req, res) => {
-    res.render('users/new')
+    if (req.session.user == undefined) {
+        res.render('users/new')
+    }
+    else {
+        res.redirect(req.session.lastRoute)
+    }
 })
 
 //Rota de login de usuários
 router.get('/users/login', (req, res) => {
-    let error = req.flash('error')
-    error = (error == undefined || error.length == 0) ? undefined : error
-    res.render('users/login', { error })
+    if (req.session.user == undefined) {
+        req.session.lastRoute = '/users/login'
+        let error = req.flash('error')
+        error = (error == undefined || error.length == 0) ? undefined : error
+        res.render('users/login', { error })
+    }
+    else {
+        res.redirect(req.session.lastRoute)
+    }
 })
 
 //Rota de painel do usuário
 router.get('/users/panel', userAuth, (req, res) => {
+    req.session.lastRoute = '/users/panel'
     res.render('users/panel', { userName: req.session.user.name })
 })
 
 router.get('/users/logout', (req, res) => {
+    req.session.lastRoute = '/users/logout'
     req.session.user = undefined
     res.redirect('/')
 })
 
 //Rota de Flash Cards do usuário
 router.get('/users/panel/flashcards/new', userAuth, (req, res) => {
-    res.render('users/flashcards/new')
+    req.session.lastRoute = '/users/panel/flashcards/new'
+    res.render('users/flashcards/new', { userName: req.session.user.name })
 })
 
 //Rota de Caderno Virtual do usuário
 router.get('/users/panel/notebook/new', userAuth, (req, res) => {
-    res.render('users/notebook/new')
+    req.session.lastRoute = '/users/panel/notebook/new'
+    res.render('users/notebook/new', { userName: req.session.user.name })
 })
 
 //Rota de Agenda do usuário
 router.get('/users/panel/schedule/new', userAuth, (req, res) => {
-    res.render('users/schedule/new')
+    req.session.lastRoute = '/users/panel/schedule/new'
+    res.render('users/schedule/new', { userName: req.session.user.name })
 })
 
 router.post('/users/save', (req, res) => {

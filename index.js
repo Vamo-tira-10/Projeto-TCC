@@ -63,9 +63,14 @@ app.use('/', adminController) //Middleware para usar as rotas do admin
 
 //Rota principal (Home)
 app.get('/', (req, res) => {
-    let success = req.flash('success')
-    success = (success == undefined || success.length == 0) ? undefined : success
-    res.render('index', { success })
+    if (req.session.user == undefined) {
+        let success = req.flash('success')
+        success = (success == undefined || success.length == 0) ? undefined : success
+        res.render('index', { success })
+    }
+    else {
+        res.redirect(req.session.lastRoute)
+    }
 })
 
 //Rota de erro 404
