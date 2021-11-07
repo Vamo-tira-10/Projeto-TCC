@@ -38,6 +38,9 @@ connection.authenticate().then(() => {
     console.log(err)
 })
 
+const User = require('./models/User')
+const FlashCard = require('./models/FlashCard')
+
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
 
