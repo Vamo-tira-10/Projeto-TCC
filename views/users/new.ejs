@@ -105,6 +105,16 @@
                 if (validator.isStrongPassword(password, {minSymbols: 0})) {
                     form.submit()
                 }
+                else {
+                    if (document.querySelector('.notification') == undefined) {
+                        bulmaToast.toast({
+                            message: 'Senha não atende os requisitos!',
+                            type: 'is-danger',
+                            duration: 3000,
+                            animate: { in: 'fadeIn', out: 'fadeOut' }
+                        })
+                    }
+                }
             }
         }
         form.onanimationend = (e) => {
