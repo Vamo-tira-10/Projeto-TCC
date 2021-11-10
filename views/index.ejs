@@ -36,7 +36,7 @@
                                 Ferramenta simples e útil para memorização de perguntas.
                         </div>
                         <div class="field">
-                            <a class="button is-primary is-fullwidth">Criar</a>
+                            <a class="button is-primary is-fullwidth" href="/users/login">Criar</a>
                         </div>
                     </div>
                 </div>
@@ -56,7 +56,7 @@
                             Crie suas próprias anotações enquanto estuda.
                         </div>
                         <div class="field">
-                            <a class="button is-primary is-fullwidth">Criar</a>
+                            <a class="button is-primary is-fullwidth" href="/users/login">Criar</a>
                         </div>
                     </div>
                 </div>
@@ -76,7 +76,7 @@
                             Programe e organize a sua rotina de estudo.
                         </div>
                         <div class="field">
-                            <a class="button is-primary is-fullwidth">Criar</a>
+                            <a class="button is-primary is-fullwidth" href="/users/login">Criar</a>
                         </div>
                     </div>
                 </div>
@@ -92,7 +92,7 @@
                         </div>
                     </div>
                     <div class="column is-4">
-                        <form action="" class="box" method="post">
+                        <form action="/users/save" class="box" method="post">
                             <label class="label">Nome de usuário</label>
                             <div class="field">
                                 <p class="control has-icons-left">
@@ -133,7 +133,7 @@
         <div class="level">
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">
+                    <p class="heading has-text-weight-bold">
                         Usuários
                     </p>
                     <p class="title">
@@ -143,7 +143,7 @@
             </div>
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">
+                    <p class="heading has-text-weight-bold">
                         Usuários
                     </p>
                     <p class="title">
@@ -153,7 +153,7 @@
             </div>
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">
+                    <p class="heading has-text-weight-bold">
                         Usuários
                     </p>
                     <p class="title">
@@ -195,6 +195,9 @@
                         animate: { in: 'fadeIn', out: 'fadeOut' }
                     })
                 }
+            }
+            else {
+                form.submit()
             }
         }
         form.onanimationend = (e) => {

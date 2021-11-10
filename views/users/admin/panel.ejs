@@ -28,41 +28,42 @@
                             <tr>
                                 <th>Nome</th>
                                 <th>E-mail</th>
-                                <th>Apelido</th>
+                                <th>Data de criação</th>
                                 <th></th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td data-label="Nome">André</td>
-                                <td data-label="E-mail">gamera103@gmail.com</td>
-                                <td data-label="Apelido">Dedé</td>
-                                <td class="is-actions-cell is-justify-content-center">
-                                    <div class="button is-centered is-danger">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome">André</td>
-                                <td data-label="E-mail">gamera103@gmail.com</td>
-                                <td data-label="Apelido">Dedé</td>
-                                <td class="is-actions-cell is-justify-content-center">
-                                    <div class="button is-centered is-danger">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </div>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td data-label="Nome">André</td>
-                                <td data-label="E-mail">gamera103@gmail.com</td>
-                                <td data-label="Apelido">Dedé</td>
-                                <td class="is-actions-cell is-justify-content-center">
-                                    <div class="button is-centered is-danger">
-                                        <i class="fas fa-trash-alt"></i>
-                                    </div>
-                                </td>
-                            </tr>
+                            <% if (users.length > 0) { %>
+                                <% users.forEach(user => { %>
+                                    <tr>
+                                        <td data-label="Nome"> <%= user.name %> </td>
+                                        <td data-label="E-mail"> <%= user.email%> </td>
+                                        <td data-label="Data de criação"> <%= user.createdAt %> </td>
+                                        <td class="is-actions-cell is-justify-content-center">
+                                            <form action="/users/delete/<%= user.id %>" method="post">
+                                                <button class="button is-centered is-danger">
+                                                    <i class="fas fa-trash-alt"></i>
+                                                </button>
+                                            </form>
+                                        </td>
+                                    </tr>
+                                <% }) %>
+                            <% } else { %>
+                                <tr class="is-empty">
+                                    <td colspan="7">
+                                        <section class="my-4">
+                                            <div class="content has-text-grey has-text-centered">
+                                                <p>
+                                                    <span class="icon is-large">
+                                                        <i class="fas fa-sad-cry is-size-1"></i>
+                                                    </span>
+                                                </p>
+                                                <p>Nenhum usuário cadastrado...</p>
+                                            </div>
+                                        </section>
+                                    </td>
+                                </tr>
+                            <% } %>
                         </tbody>
                     </table>
                 </div>
@@ -73,17 +74,17 @@
         <div class="level">
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">
+                    <p class="heading has-text-weight-bold">
                         Usuários Registrados
                     </p>
                     <p class="title">
-                        0
+                        <%= count %>
                     </p>
                 </div>
             </div>
             <div class="level-item has-text-centered">
                 <div>
-                    <p class="heading">
+                    <p class="heading has-text-weight-bold">
                         Usuários Ativos
                     </p>
                     <p class="title contador">

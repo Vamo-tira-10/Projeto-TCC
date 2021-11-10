@@ -11,7 +11,6 @@
                                 <label class="label">
                                     Nome
                                 </label>
-
                                 <div class="control has-icons-left">
                                     <input class="input" type="text" name="name" placeholder="Nome" id="name">
                                     <span class="icon is-small is-left">
@@ -19,12 +18,10 @@
                                     </span>
                                 </div>
                             </div>
-
                             <div class="field">
                                 <label class="label">
                                     E-mail
                                 </label>
-
                                 <div class="control has-icons-left">
                                     <input class="input" type="email" name="email" placeholder="E-mail" id="email">
                                     <span class="icon is-small is-left">
@@ -32,24 +29,33 @@
                                     </span>
                                 </div>
                             </div>
-                            
                             <div class="field">
                                 <label class="label">
                                     Senha
                                 </label>
-
                                 <div class="control has-icons-left">
                                     <input class="input" type="password" name="password" placeholder="Senha" id="password">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
+                                    <div class="mt-4">
+                                        <div id="pswmeter"></div>
+                                    </div>
+                                    <div class="has-text-grey is-size-7 mt-2">
+                                        1) Pelo menos uma letra minúscula.
+                                        2) Pelo menos uma letra maiúscula.
+                                        3) Pelo menos um número.
+                                        4) Pelo menos 8 caracteres.
+                                    </div>
                                 </div>
                             </div>
-                            
                             <div class="field">
                                 <button class="button is-primary mt-4 is-fullwidth">
                                     <strong>Cadastrar</strong>
                                 </button>
+                            </div>
+                            <div class="field">
+                                <a class="has-text-info" href="/users/login" id="teste">Já possuo conta</a>
                             </div>
                         </form>
                     </div>
@@ -60,6 +66,22 @@
     <%- include('../partials/footer.ejs') %>
     <script>
         const form = document.querySelector('form')
+        const myPassMeter = passwordStrengthMeter({
+            containerElement: '#pswmeter',
+            passwordInput: '#password',
+            showMessage: true,
+            messageContainer: '#pswmeter-message',
+            messagesList: [
+                'Senha vazia',
+                'Senha muito simples',
+                'Senha fraca',
+                'Senha razoável',
+                'Senha forte'
+            ],
+            colorScore2: 'hsl(48, 100%, 67%)',
+            colorScore3: 'hsl(141, 71%, 48%)',
+            colorScore4: 'hsl(141, 50%, 48%)'
+        });
         form.onsubmit = (e) => {
             e.preventDefault()
             const name = document.querySelector('#name').value
@@ -80,7 +102,9 @@
                 }
             }
             else {
-                form.submit()
+                if (validator.isStrongPassword(password, {minSymbols: 0})) {
+                    form.submit()
+                }
             }
         }
         form.onanimationend = (e) => {

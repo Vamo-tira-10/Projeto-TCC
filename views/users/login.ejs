@@ -30,6 +30,10 @@
                             <div class="field">
                                 <button class="button is-primary mt-4 is-fullwidth"> <strong>Entrar</strong></button>
                             </div>
+
+                            <div class="field">
+                                <a class="has-text-info" href="/users/new">Não tenho conta</a>
+                            </div>
                         </form>
                     </div>
                 </div>
@@ -49,11 +53,11 @@
     <% } %>
     <script>
         const form = document.querySelector('form')
+        const email = document.querySelector('#email')
+        const password = document.querySelector('#password')
         form.onsubmit = (e) => {
             e.preventDefault()
-            const email = document.querySelector('#email').value
-            const password = document.querySelector('#password').value
-            if (validator.isEmpty(email) || validator.isEmpty(password)) {
+            if (validator.isEmpty(email.value) || validator.isEmpty(password.value)) {
                 form.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
                 form.style.transform = 'translate3d(0, 0, 0)';
                 form.style.backfaceVisibility = 'hidden';

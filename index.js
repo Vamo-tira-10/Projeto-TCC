@@ -69,7 +69,12 @@ app.get('/', (req, res) => {
         res.render('index', { success })
     }
     else {
-        res.redirect(req.session.lastRoute)
+        if (req.session.user.adm == 1) {
+            res.redirect('/admin/panel')
+        }
+        else {
+            res.redirect('/users/panel')
+        }
     }
 })
 

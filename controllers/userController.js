@@ -1,10 +1,14 @@
-//Importando módulo e instanciando o módulo de rotas do Express
+//Importando e instanciando o módulo de rotas do Express
 const express = require('express')
 const router = express.Router()
 
+//Importando biblioteca para fazer o hash de senhas do usuário
 const bcrypt = require('bcryptjs')
 
+//Importando model de usuário
 const User = require('../models/User')
+
+//Importando middleware de verificação se o usuário está autenticado no sistema
 const userAuth = require('../middlewares/userAuth')
 
 //Rota de cadastro de usuários
@@ -60,6 +64,7 @@ router.get('/users/panel/schedule/new', userAuth, (req, res) => {
     res.render('users/schedule/new', { userName: req.session.user.name })
 })
 
+//Rota para receber os dados do formulário de cadastro de novo usuário
 router.post('/users/save', (req, res) => {
     const { name, email, password } = req.body
     const passwordHashed = bcrypt.hashSync(password, 10)
@@ -76,6 +81,19 @@ router.post('/users/save', (req, res) => {
     })
 })
 
+router.post('/users/delete/:id', (req, res) => {
+    User.destroy({
+        where: {
+            id: req.params.id
+        }
+    }).then(() => {
+        res.redirect('/admin/panel')
+    }).catch(err => {
+        console.log(err)
+    })
+})
+
+//Rota para receber os dados do formulário de login de usuário
 router.post('/users/auth', (req, res) => {
     const { email, password } = req.body
     User.findOne({
@@ -85,13 +103,19 @@ router.post('/users/auth', (req, res) => {
     }).then(user => {
         if (user != undefined) {
             if (bcrypt.compareSync(password, user.password)) {
-                const userAuth = {
+                const userAuthenticated = {
                     id: user.id,
                     name: user.name,
-                    email: user.email
+                    email: user.email,
+                    adm: user.adm
                 }
-                req.session.user = userAuth
-                res.redirect('/users/panel')
+                req.session.user = userAuthenticated
+                if (user.adm != 1) {
+                    res.redirect('/users/panel')
+                }
+                else {
+                    res.redirect('/admin/panel')
+                }
             }
             else {
                 req.flash('error', 'E-mail ou senha inválidos!')
