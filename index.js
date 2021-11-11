@@ -40,6 +40,7 @@ connection.authenticate().then(() => {
 
 //Importando model de Usuário
 const User = require('./models/User')
+const FlashCard = require('./models/FlashCard')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
@@ -88,3 +89,4 @@ server.listen(5050, () => {
     console.log('Servidor executando')
     console.log('http://localhost:5050')
 })
+
