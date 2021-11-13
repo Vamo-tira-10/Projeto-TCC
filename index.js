@@ -40,6 +40,8 @@ connection.authenticate().then(() => {
 
 //Importando model de Usuário
 const User = require('./models/User')
+
+//Importando model de Flash Card
 const FlashCard = require('./models/FlashCard')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
