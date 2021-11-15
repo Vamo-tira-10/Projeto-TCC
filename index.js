@@ -44,6 +44,9 @@ const User = require('./models/User')
 //Importando model de Flash Card
 const FlashCard = require('./models/FlashCard')
 
+//Importando tabela da agenda
+const Schedule = require('./models/Schedule')
+
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
 app.set('view engine', 'ejs')
 
@@ -91,4 +94,6 @@ server.listen(5050, () => {
     console.log('Servidor executando')
     console.log('http://localhost:5050')
 })
+
+
 
