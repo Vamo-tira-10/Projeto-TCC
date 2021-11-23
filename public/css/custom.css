@@ -61,6 +61,10 @@ html.sr .form {
     visibility: hidden;
 }
 
+html.sr .schedule {
+    visibility: hidden;
+}
+
 html.sr .level {
     visibility: hidden;
 }

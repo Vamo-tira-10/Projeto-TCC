@@ -9,9 +9,9 @@ const userAuth = require('../middlewares/userAuth')
 const User = require('../models/User')
 
 //Rota de painel do admin
-router.get('/admin/panel', userAuth, (req, res) => {
+router.get('/panel', userAuth, (req, res) => {
     if (req.session.user.adm == 1) {
-        req.session.lastRoute = '/admin/panel'
+        req.session.lastRoute = req.originalUrl
         User.findAndCountAll({
             where: {
                 adm: 0
@@ -32,7 +32,9 @@ router.get('/admin/panel', userAuth, (req, res) => {
                 }
                 users.push(user)
             })
-            res.render('users/admin/panel', { userName: req.session.user.name, count: data.count, users: users })
+            let success = req.flash('success')
+            success = (success == undefined || success.length == 0) ? undefined : success
+            res.render('users/admin/panel', { userName: req.session.user.name, count: data.count, users: users, success })
         }).catch(err => {
             console.log(err)
         })

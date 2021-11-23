@@ -5,11 +5,11 @@ const User = require('./User')
 
 const FlashCard = connection.define('flashcards', {
     question: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     },
     answer: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
         allowNull: false
     }
 })
@@ -17,6 +17,6 @@ const FlashCard = connection.define('flashcards', {
 FlashCard.belongsTo(User)
 User.hasMany(FlashCard)
 
-FlashCard.sync({ force: false })
+//FlashCard.sync({ force: false })
 
 module.exports = FlashCard

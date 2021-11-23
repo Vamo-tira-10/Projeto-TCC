@@ -1,0 +1,237 @@
+<%- include('../../partials/head.ejs') %>
+<title>Minha Agenda</title>
+
+    <body>
+        <%- include('../../partials/navbar_user.ejs') %>
+            <main class="hero is-primary is-normal">
+                <div class="hero-body">
+                    <div class="container">
+                        <div class="lds-dual-ring"></div>
+                        <div class="columns is-vcentered is-centered">
+                            <div class="column has-text-centered">
+                                <img class="presentation box" src="/img/agenda_index.svg" alt=""
+                                    style="display: inline;">
+                            </div>
+                            <div class="column has-text-centered-mobile">
+                                <div class="content">
+                                    <p class="title">Agenda</p>
+                                    <p class="subtitle">Organize sua rotina de estudo</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <section class="section schedule" style="margin-top: 0;">
+                <div class="columns is-vcentered">
+                    <div class="column is-2">
+                        <aside class="menu">
+                            <p class="menu-label ml-1">
+                                General
+                            </p>
+                            <ul class="menu-list">
+                                <li><a href="/users/panel" id="back-panel">Voltar ao painel</a></li>
+                            </ul>
+                            <p class="menu-label ml-1">
+                                Ferramentas
+                            </p>
+                            <ul class="menu-list">
+                                <li><a href="/users/panel/flashcards/">Flash Cards</a></li>
+                                <li><a href="/users/panel/notebooks/">Caderno Virtual</a></li>
+                                <li><a class="is-active" href="/users/panel/schedules/">Agenda</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="column is-9">
+                        <div class="box">
+                            <div id="calendar"></div>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            <div id="modal-id" class="modal modal-fx-fadeInScale">
+                <div class="modal-background"></div>
+                <div class="modal-content box">
+                   <form class="" action="/users/panel/schedules/save" method="post" id="form">
+                       <div class="field">
+                           <label class="label">Nome do evento</label>
+                           <div class="control">
+                               <input class="input" type="text" name="title" id="title">
+                           </div>
+                       </div>
+                       <div class="field">
+                            <label class="label">Data inicial</label>
+                            <div class="control">
+                                <input class="input date" name="dateStart" type="text" id="dateStart">
+                            </div>
+                       </div>
+                       <div class="field">
+                            <label class="label">Hora inicial</label>
+                            <div class="control">
+                                <input class="input time" name="timeStart" type="text" id="timeStart">
+                            </div>
+                       </div>
+                       <div class="field">
+                            <label class="label">Data final</label>
+                            <div class="control">
+                                <input class="input date" name="dateEnd" type="text" id="dateEnd">
+                            </div>
+                       </div>
+                       <div class="field">
+                            <label class="label">Hora final</label>
+                            <div class="control">
+                                <input class="input time" name="timeEnd" type="text" id="timeEnd">
+                            </div>
+                        </div>
+                        <div class="field" id="delete" style="display: none;">
+                            <button class="button is-danger is-fullwidth mt-4" id="btn-delete">Excluir</button>
+                        </div>
+                        <div class="field">
+                            <button class="button is-success is-fullwidth mt-4" id="button">Cadastrar</button>
+                        </div>
+                   </form>
+                   <form action="/users/panel/schedules/delete" method="post" id="form-delete"></form>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <%- include('../../partials/footer.ejs') %>
+            <script>
+                $('.date').mask('00/00/0000')
+                $('.time').mask('00:00')
+
+                document.querySelectorAll('.modal-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.modal').forEach(modal => {
+                            if (modal.classList.contains('is-active')) {
+                                document.querySelector('html').style = ''
+                                document.querySelector('body').style = 'height: 100%;'
+                            }
+                        })
+                    })
+                })
+
+                document.querySelector('#form').addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    let errorSubmit = false
+                    let errorFormat = false
+
+                    if (validator.isEmpty(document.querySelector('#dateStart').value) || validator.isEmpty(document.querySelector('#dateEnd').value) || validator.isEmpty(document.querySelector('#timeStart').value) || validator.isEmpty(document.querySelector('#timeEnd').value)) {
+                        errorSubmit =  true
+                    }
+                    else {
+                        if (!moment(document.querySelector('#dateStart').value, 'DD/MM/YYYY',true).isValid()) {
+                            errorFormat = true
+                        }
+                        if (!moment(document.querySelector('#dateEnd').value, 'DD/MM/YYYY',true).isValid()) {
+                            errorFormat = true
+                        }
+                        if (!moment(document.querySelector('#timeStart').value + ':00', 'HH:mm:ss',true).isValid()) {
+                            errorFormat = true
+                        }
+                        if (!moment(document.querySelector('#timeEnd').value + ':00', 'HH:mm:ss',true).isValid()) {
+                            errorFormat = true
+                        }
+                    }
+
+                    if (errorSubmit) {
+                        document.querySelector('.modal-content').style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        document.querySelector('.modal-content').style.transform = 'translate3d(0, 0, 0)';
+                        document.querySelector('.modal-content').style.backfaceVisibility = 'hidden';
+                        document.querySelector('.modal-content').style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                    }
+                    else if (errorFormat) {
+                        document.querySelector('.modal-content').style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        document.querySelector('.modal-content').style.transform = 'translate3d(0, 0, 0)';
+                        document.querySelector('.modal-content').style.backfaceVisibility = 'hidden';
+                        document.querySelector('.modal-content').style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Datas ou horários inválidos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                    }
+                    else {
+                        e.target.submit()
+                    }
+                })
+
+                document.querySelector('.modal-content').addEventListener('animationend', (e) => {
+                    document.querySelector('.modal-content').style.animation = '';
+                    document.querySelector('.modal-content').style.transform = '';
+                    document.querySelector('.modal-content').style.backfaceVisibility = '';
+                    document.querySelector('.modal-content').style.perspective = '';
+                })
+
+                document.addEventListener('DOMContentLoaded', function() {
+                    const calendarEl = document.getElementById('calendar');
+                    const calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'dayGridMonth',
+                        headerToolbar: {
+                            left: 'today',
+                            center: 'title',
+                            right: 'prev,next'
+                        },
+                        locale: 'pt-br',
+                        height: 500,
+                        events: 'getcalendar',
+                        eventDisplay: 'block',
+                        displayEventTime: false,
+                        dateClick: function (info) {
+                            document.querySelector('#form').action = '/users/panel/schedules/save'
+                            document.querySelector('#button').innerHTML = 'Cadastrar'
+                            document.querySelector('#delete').style.display = 'none'
+                            document.querySelector('#modal-id').classList.add('is-active')
+                            document.querySelector('#title').value = ''
+                            document.querySelector('#dateStart').value = new Date(info.dateStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+                            document.querySelector('#dateEnd').value = ''
+                            document.querySelector('#timeStart').value = ''
+                            document.querySelector('#timeEnd').value = ''
+                        },
+                        eventClick: function (info) {
+                            document.querySelector('#form').action = `/users/panel/schedules/edit/${info.event._def.publicId}`
+                            document.querySelector('#btn-delete').addEventListener('click', (e) => {
+                                e.preventDefault()
+                                document.querySelector('#form-delete').action = `/users/panel/schedules/delete/${info.event._def.publicId}`
+                                document.querySelector('#form-delete').submit()
+                            })
+                            document.querySelector('#button').innerHTML = 'Editar'
+                            document.querySelector('#delete').style.display = 'block'
+                            document.querySelector('#modal-id').classList.add('is-active')
+                            document.querySelector('#title').value = info.event.title
+                            document.querySelector('#dateStart').value = new Date(info.event.startStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+                            document.querySelector('#dateEnd').value = new Date(info.event.endStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+                            document.querySelector('#timeStart').value = info.event.startStr.split('T')[1].split('-')[0].slice(0, -3)
+                            document.querySelector('#timeEnd').value = info.event.endStr.split('T')[1].split('-')[0].slice(0, -3)
+                        }
+                    });
+                    calendar.render();
+                });
+            </script>
+            <% if (adm) { %>
+                <script>
+                    document.querySelector('#back-panel').href = '/admin/panel'
+                </script>
+            <% } %>
+            <% if (success != undefined) { %>
+                <script>
+                    bulmaToast.toast({
+                        message: '<%= success %>',
+                        type: 'is-info',
+                        duration: 3000,
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    })
+                </script>
+            <% } %>
+    </body>

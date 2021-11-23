@@ -1,0 +1,244 @@
+<%- include('../../partials/head.ejs') %>
+<title>Meus Flash Cards</title>
+
+    <body>
+        <%- include('../../partials/navbar_user.ejs') %>
+            <main class="hero is-primary is-normal">
+                <div class="hero-body">
+                    <div class="container">
+                        <div class="lds-dual-ring"></div>
+                        <div class="columns is-vcentered is-centered">
+                            <div class="column has-text-centered">
+                                <img class="presentation box" src="/img/flash_card_index.svg" alt=""
+                                    style="display: inline;">
+                            </div>
+                            <div class="column has-text-centered-mobile">
+                                <div class="content">
+                                    <p class="title">Flash Cards</p>
+                                    <p class="subtitle">Gerencie sua ferramenta de memorização de perguntas</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <section class="section form" style="margin-top: 0;">
+                <div class="columns is-vcentered">
+                    <div class="column is-2">
+                        <aside class="menu">
+                            <p class="menu-label ml-1">
+                                General
+                            </p>
+                            <ul class="menu-list">
+                                <li><a href="/users/panel" id="back-panel">Voltar ao painel</a></li>
+                            </ul>
+                            <p class="menu-label ml-1">
+                                Ferramentas
+                            </p>
+                            <ul class="menu-list">
+                                <li><a class="is-active" href="/users/panel/flashcards/">Flash Cards</a></li>
+                                <li><a href="/users/panel/notebooks/">Caderno Virtual</a></li>
+                                <li><a href="/users/panel/schedules/">Agenda</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="column is-9">
+                        <div class="box" id="contacts" data-example>
+                            <h1 class="title is-4 mb-2">Meus Flash Cards</h1>
+                            <% if (flashcards.length> 0) { %>
+                                <div class="list">
+                                    <% flashcards.forEach(flashcard => { %>
+                                        <div class="list-item">
+                                            <div class="list-item-content">
+                                                <div class="list-item-title"> <%= flashcard.question %> </div>
+                                            </div>
+    
+                                            <div class="list-item-controls">
+                                                <div class="buttons">
+                                                    <button class="button is-dark is-inverted modal-button" data-target="modal-resposta-<%= flashcard.id %>">
+                                                        <span class="icon">
+                                                            <i class="fas fa-check-circle is-size-4"></i>
+                                                        </span>
+                                                    </button>
+                                                    <button class="button is-dark is-inverted modal-button" data-target="modal-resposta-edit-<%= flashcard.id %>">
+                                                        <span class="icon">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </span>
+                                                    </button>
+                                                    <form action="/users/panel/flashcards/delete/<%= flashcard.id %>" method="post">
+                                                        <button class="button is-dark is-inverted">
+                                                            <span class="icon">
+                                                                <i class="fas fa-trash"></i>
+                                                            </span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                                <% } else {%>
+                                    <div class="container has-text-centered">
+                                        <i class="fas fa-sad-cry is-size-1 my-2 has-text-grey-light"></i>
+                                        <p class="subtitle my-4 has-text-grey-light">Nada cadastrado</p>
+                                    </div>
+                                <% } %>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+            <div id="modal-cadastro" class="modal modal-fx-fadeInScale">
+                <div class="modal-background"></div>
+                <div class="modal-content" id="mcC">
+                    <div class="box">
+                        <form action="/users/panel/flashcards/save" method="post">
+                            <div class="field">
+                                <label class="label">Pergunta</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="question" id="qC" placeholder="Digite a pergunta">
+                                </div>
+                            </div>
+                            <div class="field">
+                                <label class="label">Resposta Correta</label>
+                                <div class="control">
+                                    <input type="text" class="input" name="answer" id="aC" placeholder="Digite a resposta da pergunta">
+                                </div>
+                            </div>
+                            <div>
+                                <button class="button is-success mt-4 is-fullwidth">Cadastrar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <% flashcards.forEach(flashcard => { %>
+                <div id="modal-resposta-<%= flashcard.id %>" class="modal modal-fx-fadeInScale">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <div class="box">
+                            <div>
+                                <p class="title"> <%= flashcard.question %> </p>
+                                <div class="field">
+                                    <label class="label">Resposta</label>
+                                    <div class="control">
+                                        <input type="text" class="input" name="answer" placeholder="Digite a resposta da pergunta">
+                                    </div>
+                                </div>
+                                <div class="field" style="display: none;">
+                                    <p class="subtitle">Resposta Correta: <%= flashcard.answer %> </p>
+                                </div>
+                                <div>
+                                    <a id="button-<%= flashcard.id %>" class="button is-success mt-4 is-fullwidth" onclick="showAnswer('<%= flashcard.id %>')">Responder</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-resposta-edit-<%= flashcard.id %>" class="modal modal-fx-fadeInScale">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <div class="box">
+                            <form action="/users/panel/flashcards/edit/<%= flashcard.id %>" method="post">
+                                <div class="field">
+                                    <label class="label">Pergunta</label>
+                                    <div class="control">
+                                        <input type="text" class="input" name="question" value="<%= flashcard.question %>" placeholder="Digite a pergunta">
+                                    </div>
+                                </div>
+                                <div class="field">
+                                    <label class="label">Resposta Correta</label>
+                                    <div class="control">
+                                        <input type="text" class="input" name="answer" value="<%= flashcard.answer %>" placeholder="Digite a resposta da pergunta">
+                                    </div>
+                                </div>
+                                <div>
+                                    <button class="button is-success mt-4 is-fullwidth">Editar</button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+            <% }) %>
+            <a class="button is-floating is-info form modal-button" data-target="modal-cadastro">
+                <i class="fas fa-plus"></i>
+            </a>
+            <%- include('../../partials/footer.ejs') %>
+            <script>
+                document.querySelectorAll('.modal-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.modal').forEach(modal => {
+                            if (modal.classList.contains('is-active')) {
+                                document.querySelector('html').style = ''
+                                document.querySelector('body').style = 'height: 100%;'
+                            }
+                        })
+                    })
+                })
+
+                showAnswer = (id) => {
+                    let button = document.querySelector(`#button-${id}`)
+                    document.querySelector(`#modal-resposta-${id} [name=answer]`).readOnly = true
+                    document.querySelectorAll(`#modal-resposta-${id} .field`)[1].style = 'display: block;'
+                    button.innerHTML = 'Fechar'
+                    button.classList.remove('is-success')
+                    button.classList.add('is-info')
+                    button.onclick = (e) => {
+                        document.querySelector(`#modal-resposta-${id}`).classList.remove('is-active')
+                        window.location.reload()
+                    }
+                }
+
+                document.querySelector('#modal-cadastro').addEventListener('submit', (e) => {
+                    e.preventDefault()
+                    let error = false
+                    if (validator.isEmpty(document.querySelector('#qC').value) || validator.isEmpty(document.querySelector('#aC').value)) {
+                        error = true
+                    }
+                    if (error) {
+                        document.querySelector('#mcC').style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        document.querySelector('#mcC').style.transform = 'translate3d(0, 0, 0)';
+                        document.querySelector('#mcC').style.backfaceVisibility = 'hidden';
+                        document.querySelector('#mcC').style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                    }
+                    else {
+                        e.target.submit()
+                    }
+                })
+
+                document.querySelector('#modal-cadastro').addEventListener('animationend', () => {
+                    document.querySelector('#mcC').style.animation = '';
+                    document.querySelector('#mcC').style.transform = '';
+                    document.querySelector('#mcC').style.backfaceVisibility = '';
+                    document.querySelector('#mcC').style.perspective = '';
+                })
+
+            </script>
+
+            <% if (adm) { %>
+                <script>
+                    document.querySelector('#back-panel').href = '/admin/panel'
+                </script>
+            <% } %>
+            <% if (success) { %>
+                <script>
+                    bulmaToast.toast({
+                        message: '<%= success %>',
+                        type: 'is-info',
+                        duration: 3000,
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    })
+                </script>
+            <% } %>
+    </body>

@@ -8,13 +8,24 @@ const bcrypt = require('bcryptjs')
 //Importando model de usuário
 const User = require('../models/User')
 
+//Importando model de Flash Cards
+const FlashCard = require('../models/FlashCard')
+
+//Importando model de Caderno Virtual
+const Notebook = require('../models/Notebook')
+
+//Importando model de Agenda
+const Schedule = require('../models/Schedule')
+
 //Importando middleware de verificação se o usuário está autenticado no sistema
 const userAuth = require('../middlewares/userAuth')
 
 //Rota de cadastro de usuários
-router.get('/users/new', (req, res) => {
+router.get('/new', (req, res) => {
     if (req.session.user == undefined) {
-        res.render('users/new')
+        let error = req.flash('error')
+        error = (error == undefined || error.length == 0) ? undefined : error
+        res.render('users/new', { error })
     }
     else {
         res.redirect(req.session.lastRoute)
@@ -22,9 +33,9 @@ router.get('/users/new', (req, res) => {
 })
 
 //Rota de login de usuários
-router.get('/users/login', (req, res) => {
+router.get('/login', (req, res) => {
     if (req.session.user == undefined) {
-        req.session.lastRoute = '/users/login'
+        req.session.lastRoute = req.originalUrl
         let error = req.flash('error')
         error = (error == undefined || error.length == 0) ? undefined : error
         res.render('users/login', { error })
@@ -35,58 +46,73 @@ router.get('/users/login', (req, res) => {
 })
 
 //Rota de painel do usuário
-router.get('/users/panel', userAuth, (req, res) => {
-    req.session.lastRoute = '/users/panel'
-    res.render('users/panel', { userName: req.session.user.name })
+router.get('/panel', userAuth, (req, res) => {
+    req.session.lastRoute = req.originalUrl
+    FlashCard.count({
+        where: {
+            userId: req.session.user.id
+        }
+    }).then(flashcardsCount => {
+        Notebook.count({
+            where: {
+                userId: req.session.user.id
+            }
+        }).then(notebooksCount => {
+            Schedule.count({
+                where: {
+                    userId: req.session.user.id
+                }
+            }).then(schedulesCount => {
+                res.render('users/panel', { userName: req.session.user.name, flashcardsCount, notebooksCount, schedulesCount })
+            })
+        })
+    })
 })
 
-router.get('/users/logout', (req, res) => {
-    req.session.lastRoute = '/users/logout'
+router.get('/logout', (req, res) => {
+    req.session.lastRoute = req.originalUrl
     req.session.user = undefined
     res.redirect('/')
 })
 
-//Rota de Flash Cards do usuário
-router.get('/users/panel/flashcards/new', userAuth, (req, res) => {
-    req.session.lastRoute = '/users/panel/flashcards/new'
-    res.render('users/flashcards/new', { userName: req.session.user.name })
-})
-
-//Rota de Caderno Virtual do usuário
-router.get('/users/panel/notebook/new', userAuth, (req, res) => {
-    req.session.lastRoute = '/users/panel/notebook/new'
-    res.render('users/notebook/new', { userName: req.session.user.name })
-})
-
-//Rota de Agenda do usuário
-router.get('/users/panel/schedule/new', userAuth, (req, res) => {
-    req.session.lastRoute = '/users/panel/schedule/new'
-    res.render('users/schedule/new', { userName: req.session.user.name })
-})
-
 //Rota para receber os dados do formulário de cadastro de novo usuário
-router.post('/users/save', (req, res) => {
+router.post('/save', (req, res) => {
     const { name, email, password } = req.body
     const passwordHashed = bcrypt.hashSync(password, 10)
-    User.create({
-        name: name,
-        email: email,
-        password: passwordHashed,
-        adm: 0
-    }).then(() => {
-        req.flash('success', 'Usuário cadastrado com sucesso!')
-        res.redirect('/')
+    User.findOne({
+        where: {
+            email: email
+        }
+    }).then(user => {
+        if (user == undefined) {
+            User.create({
+                name: name,
+                email: email,
+                password: passwordHashed,
+                adm: 0
+            }).then(() => {
+                req.flash('success', 'Usuário cadastrado com sucesso!')
+                res.redirect('/')
+            }).catch(err => {
+                console.log(err)
+            })
+        }
+        else {
+            req.flash('error', 'E-mail já cadastrado!')
+            res.redirect('/users/new')
+        }
     }).catch(err => {
         console.log(err)
     })
 })
 
-router.post('/users/delete/:id', (req, res) => {
+router.post('/delete/:id', (req, res) => {
     User.destroy({
         where: {
             id: req.params.id
         }
     }).then(() => {
+        req.flash('success', 'Usuário excluído com sucesso!')
         res.redirect('/admin/panel')
     }).catch(err => {
         console.log(err)
@@ -94,7 +120,7 @@ router.post('/users/delete/:id', (req, res) => {
 })
 
 //Rota para receber os dados do formulário de login de usuário
-router.post('/users/auth', (req, res) => {
+router.post('/auth', (req, res) => {
     const { email, password } = req.body
     User.findOne({
         where: {

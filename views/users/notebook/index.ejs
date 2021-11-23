@@ -1,0 +1,208 @@
+<%- include('../../partials/head.ejs') %>
+<title>Meus Cadernos Virtuais</title>
+    <script src="/tinymce/tinymce.min.js"></script>
+    <script>
+        tinymce.init({
+            language: 'pt_BR',
+            selector: '.notebook',
+            plugins: [
+                'advlist autolink link image lists print preview hr searchreplace wordcount insertdatetime media save table paste emoticons'  
+            ]
+        })
+        tinymce.init({
+            language: 'pt_BR',
+            selector: '.notebook-edit',
+            plugins: [
+                'advlist autolink link image lists print preview hr searchreplace wordcount insertdatetime media save table paste emoticons'  
+            ]
+        })
+    </script>
+    <body>
+        <%- include('../../partials/navbar_user.ejs') %>
+            <main class="hero is-primary is-normal">
+                <div class="hero-body">
+                    <div class="container">
+                        <div class="lds-dual-ring"></div>
+                        <div class="columns is-vcentered is-centered">
+                            <div class="column has-text-centered">
+                                <img class="presentation box" src="/img/caderno_virtual_index.svg" alt=""
+                                    style="display: inline;">
+                            </div>
+                            <div class="column has-text-centered-mobile">
+                                <div class="content">
+                                    <p class="title">Caderno Virtual</p>
+                                    <p class="subtitle">Crie e leia suas próprias anotações</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+            <section class="section form" style="margin-top: 0;">
+                <div class="columns is-vcentered">
+                    <div class="column is-2">
+                        <aside class="menu">
+                            <p class="menu-label ml-1">
+                                General
+                            </p>
+                            <ul class="menu-list">
+                                <li><a href="/users/panel" id="back-panel">Voltar ao painel</a></li>
+                            </ul>
+                            <p class="menu-label ml-1">
+                                Ferramentas
+                            </p>
+                            <ul class="menu-list">
+                                <li><a href="/users/panel/flashcards/">Flash Cards</a></li>
+                                <li><a class="is-active" href="/users/panel/notebooks/">Caderno Virtual</a></li>
+                                <li><a href="/users/panel/schedules/">Agenda</a></li>
+                            </ul>
+                        </aside>
+                    </div>
+                    <div class="column is-9">
+                        <div class="box" id="contacts" data-example>
+                            <h1 class="title is-4 mb-2">Meus Cadernos Virtuais</h1>
+                            <% if (notebooks.length > 0) { %>
+                                <div class="list">
+                                    <% notebooks.forEach(notebook => { %>
+                                        <div class="list-item">
+                                            <div class="list-item-content">
+                                                <div class="list-item-title"> <%= notebook.name %> </div>
+                                            </div>
+            
+                                            <div class="list-item-controls">
+                                                <div class="buttons">
+                                                    <button class="button is-dark is-inverted modal-button" data-target="modal-view-<%= notebook.id %>">
+                                                        <span class="icon">
+                                                            <i class="fas fa-book is-size-4"></i>
+                                                        </span>
+                                                    </button>
+            
+                                                    <button class="button is-dark is-inverted modal-button" data-target="modal-edit-<%= notebook.id %>">
+                                                        <span class="icon">
+                                                            <i class="fas fa-pencil-alt"></i>
+                                                        </span>
+                                                    </button>
+                                                    <form action="/users/panel/notebooks/delete/<%= notebook.id %>" method="post">
+                                                        <button class="button is-dark is-inverted">
+                                                            <span class="icon">
+                                                                <i class="fas fa-trash"></i>
+                                                            </span>
+                                                        </button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    <% }) %>
+                                </div>
+                            <% } else { %>
+                                <div class="container has-text-centered">
+                                    <i class="fas fa-sad-cry is-size-1 my-2 has-text-grey-light"></i>
+                                    <p class="subtitle my-4 has-text-grey-light">Nada cadastrado</p>
+                                </div>
+                            <% } %>
+                        </div>
+                    </div>
+                    
+                </div>
+            </section>
+            <div id="modal-cadastro" class="modal modal-fx-fadeInScale">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <form class="box" action="/users/panel/notebooks/save" method="POST">
+                        <div class="field">
+                            <label class="label">Título do Caderno Virtual</label>
+                            <div class="control">
+                                <input class="input" type="text" name="name" required>
+                            </div>
+                        </div>
+        
+                        <div class="field">
+                            <label class="label">Anotações do Caderno Virtual</label>
+                            <div class="control">
+                                <textarea class="textarea notebook" name="content" placeholder="Digite as suas anotações"></textarea>
+                            </div>
+                        </div>
+        
+                        <div class="field">
+                            <button class="button is-success mt-4 is-fullwidth"> 
+                                <strong>
+                                    Criar
+                                </strong>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <button class="modal-close is-large" aria-label="close"></button>
+            </div>
+            <% notebooks.forEach(notebook => { %>
+                <div id="modal-view-<%= notebook.id %>" class="modal modal-fx-fadeInScale">
+                    <div class="modal-background"></div>
+                    <div class="modal-content" style="word-wrap: break-word;">
+                        <div class="box">
+                            <p class="title"> <%= notebook.name %> </p>
+                            <div class="content">
+                                <%- notebook.content %>
+                            </div>
+                        </div>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+                <div id="modal-edit-<%= notebook.id %>" class="modal modal-fx-fadeInScale">
+                    <div class="modal-background"></div>
+                    <div class="modal-content">
+                        <form class="box" action="/users/panel/notebooks/edit/<%= notebook.id %>" method="POST">
+                            <div class="field">
+                                <label class="label">Título do Caderno Virtual</label>
+                                <div class="control">
+                                    <input class="input" type="text" name="name" value="<%= notebook.name %>" required>
+                                </div>
+                            </div>
+            
+                            <div class="field">
+                                <label class="label">Anotações do Caderno Virtual</label>
+                                <div class="control">
+                                    <textarea class="textarea notebook-edit" name="content" placeholder="Digite as suas anotações"> <%= notebook.content %> </textarea>
+                                </div>
+                            </div>
+            
+                            <div class="field">
+                                <button class="button is-success mt-4 is-fullwidth">Editar</button>
+                                <div class="content-edit" style="display: none;"> <%- notebook.content %> </div>
+                            </div>
+                        </form>
+                    </div>
+                    <button class="modal-close is-large" aria-label="close"></button>
+                </div>
+            <% }) %>
+            <a class="button is-floating is-info form modal-button" data-target="modal-cadastro">
+                <i class="fas fa-plus"></i>
+            </a>
+            <%- include('../../partials/footer.ejs') %>
+            <script>
+                document.querySelectorAll('.modal-button').forEach(button => {
+                    button.addEventListener('click', () => {
+                        document.querySelectorAll('.modal').forEach(modal => {
+                            if (modal.classList.contains('is-active')) {
+                                document.querySelector('html').style = ''
+                                document.querySelector('body').style = 'height: 100%;'
+                            }
+                        })
+                    })
+                })
+            </script>
+            <% if (adm) { %>
+                <script>
+                    document.querySelector('#back-panel').href = '/admin/panel'
+                </script>
+            <% } %>
+            <% if (success) { %>
+                <script>
+                    bulmaToast.toast({
+                        message: '<%= success %>',
+                        type: 'is-info',
+                        duration: 3000,
+                        animate: { in: 'fadeIn', out: 'fadeOut' }
+                    })
+                </script>
+            <% } %>
+    </body>

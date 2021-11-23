@@ -40,6 +40,11 @@ window.addEventListener('load', () => {
         viewFactor: 0.7
     })
 
+    sr.reveal('.schedule', {
+        origin: 'left',
+        distance: '40px'
+    })
+
     sr.reveal('.level', {
         origin: 'left',
         distance: '40px',

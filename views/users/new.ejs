@@ -1,4 +1,5 @@
 <%- include('../partials/head.ejs') %>
+<title>Cadastro</title>
 <body>
     <%- include('../partials/navbar.ejs') %>
     <div class="hero is-primary is-fullheight-with-navbar">
@@ -64,6 +65,16 @@
         </div>
     </div>
     <%- include('../partials/footer.ejs') %>
+    <% if (error) { %>
+        <script>
+            bulmaToast.toast({
+                message: '<%= error %>',
+                type: 'is-danger',
+                duration: 3000,
+                animate: { in: 'fadeIn', out: 'fadeOut' }
+            })
+        </script>
+    <% } %>
     <script>
         const form = document.querySelector('form')
         const myPassMeter = passwordStrengthMeter({

@@ -30,6 +30,15 @@ const userController = require('./controllers/userController')
 //Importando rotas do admin
 const adminController = require('./controllers/adminController')
 
+//Importando rotas de Flash Card
+const flashCardController = require('./controllers/flashCardController')
+
+//Importando rotas do Caderno Virtual
+const notebookController = require('./controllers/notebookController')
+
+//Importando rotas da Agenda
+const scheduleController = require('./controllers/scheduleController')
+
 const connection = require('./database/connection')
 
 connection.authenticate().then(() => {
@@ -44,7 +53,10 @@ const User = require('./models/User')
 //Importando model de Flash Card
 const FlashCard = require('./models/FlashCard')
 
-//Importando tabela da agenda
+//Importando model de Caderno Virtual
+const Notebook = require('./models/Notebook')
+
+//Importando model da Agenda
 const Schedule = require('./models/Schedule')
 
 //Configurando Express para utilizar o EJS como template engine (Renderizar HTML dinâmico)
@@ -56,16 +68,17 @@ app.use(session({
     secret: 'asjodjaso',
     resave: false,
     saveUninitialized: true,
-    rolling: true,
-    cookie: {
-        maxAge: 60000
-    }
+    rolling: true
 }))
 app.use(flash())
 app.use(express.static('public')) //Middleware de conteúdo estático (CSS, JS)
 app.use(express.urlencoded({ extended: false })) //Middleware para interpretar o body das requisições (Formulários)
-app.use('/', userController) //Middleware para usar as rotas do usuário
-app.use('/', adminController) //Middleware para usar as rotas do admin
+app.use('/users', userController) //Middleware para usar as rotas do usuário
+app.use('/admin', adminController) //Middleware para usar as rotas do admin
+app.use('/users/panel/flashcards', flashCardController) //Middleware para usar as rotas de Flash Card
+app.use('/users/panel/notebooks', notebookController) //Middleware para usar as rotas de Flash Card
+app.use('/users/panel/schedules', scheduleController) //Middleware para usar as rotas de Flash Card
+app.use('/favicon.ico', express.static('public/img/favicon.ico'))
 
 //Rota principal (Home)
 app.get('/', (req, res) => {

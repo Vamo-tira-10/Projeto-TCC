@@ -8,10 +8,6 @@ const Schedule = connection.define('schedules', {
         type: Sequelize.STRING,
         allowNull: false
     },
-    description: {
-        type: Sequelize.STRING,
-        allowNull: false
-    },
     start: {
         type: Sequelize.DATE,
         allowNull: false
@@ -25,7 +21,7 @@ const Schedule = connection.define('schedules', {
 Schedule.belongsTo(User)
 User.hasMany(Schedule)
 
-Schedule.sync({ force: false })
+//Schedule.sync({ force: false })
 
 module.exports = Schedule
 
