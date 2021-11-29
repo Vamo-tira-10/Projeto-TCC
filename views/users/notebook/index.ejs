@@ -61,12 +61,16 @@
                     <div class="column is-9">
                         <div class="box" id="contacts" data-example>
                             <h1 class="title is-4 mb-2">Meus Cadernos Virtuais</h1>
-                            <% if (notebooks.length > 0) { %>
+                            <% if (notebooksFormated.length > 0) { %>
                                 <div class="list">
-                                    <% notebooks.forEach(notebook => { %>
+                                    <% notebooksFormated.forEach(notebook => { %>
                                         <div class="list-item">
                                             <div class="list-item-content">
                                                 <div class="list-item-title"> <%= notebook.name %> </div>
+                                                <div class="list-item-description mt-2">
+                                                    <div class="tag is-rounded">Data de criação: <%= notebook.createdAt %></div>
+                                                    <div class="tag is-rounded">Última atualização: <%= notebook.updatedAt %></div>
+                                                </div>
                                             </div>
             
                                             <div class="list-item-controls">
@@ -107,19 +111,19 @@
             </section>
             <div id="modal-cadastro" class="modal modal-fx-fadeInScale">
                 <div class="modal-background"></div>
-                <div class="modal-content">
+                <div class="modal-content" id="contentCadastro">
                     <form class="box" action="/users/panel/notebooks/save" method="POST">
                         <div class="field">
                             <label class="label">Título do Caderno Virtual</label>
                             <div class="control">
-                                <input class="input" type="text" name="name" required>
+                                <input class="input" type="text" name="name" id="name-cadastro">
                             </div>
                         </div>
         
                         <div class="field">
                             <label class="label">Anotações do Caderno Virtual</label>
                             <div class="control">
-                                <textarea class="textarea notebook" name="content" placeholder="Digite as suas anotações"></textarea>
+                                <textarea class="textarea notebook" name="content" id="content-cadastro" placeholder="Digite as suas anotações"></textarea>
                             </div>
                         </div>
         
@@ -134,7 +138,7 @@
                 </div>
                 <button class="modal-close is-large" aria-label="close"></button>
             </div>
-            <% notebooks.forEach(notebook => { %>
+            <% notebooksFormated.forEach(notebook => { %>
                 <div id="modal-view-<%= notebook.id %>" class="modal modal-fx-fadeInScale">
                     <div class="modal-background"></div>
                     <div class="modal-content" style="word-wrap: break-word;">
@@ -149,24 +153,24 @@
                 </div>
                 <div id="modal-edit-<%= notebook.id %>" class="modal modal-fx-fadeInScale">
                     <div class="modal-background"></div>
-                    <div class="modal-content">
+                    <div class="modal-content" id="contentEdit<%= notebook.id %>">
                         <form class="box" action="/users/panel/notebooks/edit/<%= notebook.id %>" method="POST">
                             <div class="field">
                                 <label class="label">Título do Caderno Virtual</label>
                                 <div class="control">
-                                    <input class="input" type="text" name="name" value="<%= notebook.name %>" required>
+                                    <input class="input" type="text" name="name" id="name<%= notebook.id %>" value="<%= notebook.name %>" required>
                                 </div>
                             </div>
             
                             <div class="field">
                                 <label class="label">Anotações do Caderno Virtual</label>
                                 <div class="control">
-                                    <textarea class="textarea notebook-edit" name="content" placeholder="Digite as suas anotações"> <%= notebook.content %> </textarea>
+                                    <textarea class="textarea notebook-edit" name="content" id="content<%= notebook.id %>" placeholder="Digite as suas anotações"> <%= notebook.content %> </textarea>
                                 </div>
                             </div>
             
                             <div class="field">
-                                <button class="button is-success mt-4 is-fullwidth">Editar</button>
+                                <button class="button is-success mt-4 is-fullwidth" onclick="validEdit(event, '<%= notebook.id %>')">Editar</button>
                                 <div class="content-edit" style="display: none;"> <%- notebook.content %> </div>
                             </div>
                         </form>
@@ -189,6 +193,58 @@
                         })
                     })
                 })
+
+                document.querySelector('#modal-cadastro').addEventListener('submit', (e) => {
+                    let content = document.querySelector(`#contentCadastro`)
+                    if (validator.isEmpty(document.querySelector('#name-cadastro').value) || validator.isEmpty(document.querySelector('#content-cadastro').value)) {
+                        content.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        content.style.transform = 'translate3d(0, 0, 0)';
+                        content.style.backfaceVisibility = 'hidden';
+                        content.style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                        e.preventDefault()
+                    }
+                    content.addEventListener('animationend', () => {
+                        content.style.animation = '';
+                        content.style.transform = '';
+                        content.style.backfaceVisibility = '';
+                        content.style.perspective = '';
+                    })
+                })
+
+                validEdit = (e, id) => {
+                    const text = tinyMCE.activeEditor.getContent({ format: 'text'})
+                    let content = document.querySelector(`#contentEdit${id}`)
+                    if (validator.isEmpty(document.querySelector(`#name${id}`).value) || validator.isEmpty(text)) {
+                        content.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        content.style.transform = 'translate3d(0, 0, 0)';
+                        content.style.backfaceVisibility = 'hidden';
+                        content.style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                        e.preventDefault()
+                    }
+                    content.addEventListener('animationend', () => {
+                        content.style.animation = '';
+                        content.style.transform = '';
+                        content.style.backfaceVisibility = '';
+                        content.style.perspective = '';
+                    })
+                }
+
             </script>
             <% if (adm) { %>
                 <script>

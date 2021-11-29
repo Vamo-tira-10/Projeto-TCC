@@ -7,6 +7,9 @@ const userAuth = require('../middlewares/userAuth')
 //Importando model de Flash Card
 const FlashCard = require('../models/FlashCard')
 
+//Importando biblioteca para manipuladar datas e horas
+const moment = require('moment')
+
 //Rota para a página principal de Flash Cards
 router.get('/', userAuth, (req, res) => {
     req.session.lastRoute = req.originalUrl
@@ -23,8 +26,19 @@ router.get('/', userAuth, (req, res) => {
             adm = true
         }
         let success = req.flash('success')
+        const flashCardsFormated = []
+        flashcards.forEach(flashcard => {
+            const flashCardSet = {
+                id: flashcard.id,
+                question: flashcard.question,
+                answer: flashcard.answer,
+                createdAt: new Date(flashcard.createdAt).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'}),
+                updatedAt: new Date(flashcard.updatedAt).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
+            }
+            flashCardsFormated.push(flashCardSet)
+        })
         success = (success == undefined || success.length == 0) ? undefined : success
-        res.render('users/flashcards/index', { userName: req.session.user.name, flashcards, adm, success })
+        res.render('users/flashcards/index', { userName: req.session.user.name, flashCardsFormated, adm, success })
     }).catch(err => {
         console.log(err)
     })
@@ -36,7 +50,11 @@ router.post('/save', (req, res) => {
     FlashCard.create({
         question: question,
         answer: answer,
-        userId: req.session.user.id
+        userId: req.session.user.id,
+        updatedAt: moment()
+    },
+    {
+        silent: true
     }).then(() => {
         req.flash('success', 'Flash Card cadastrado com sucesso!')
         res.redirect('/users/panel/flashcards/')

@@ -23,8 +23,19 @@ router.get('/', userAuth, (req, res) => {
             adm = true
         }
         let success = req.flash('success')
+        const notebooksFormated = []
+        notebooks.forEach(notebook => {
+            const notebookSet = {
+                id: notebook.id,
+                name: notebook.name,
+                content: notebook.content,
+                createdAt: new Date(notebook.createdAt).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'}),
+                updatedAt: new Date(notebook.updatedAt).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
+            }
+            notebooksFormated.push(notebookSet)
+        })
         success = (success == undefined || success.length == 0) ? undefined : success
-        res.render('users/notebook/index', { userName: req.session.user.name, notebooks, adm, success })
+        res.render('users/notebook/index', { userName: req.session.user.name, notebooksFormated, adm, success })
     }).catch(err => {
         console.log(err)
     })

@@ -16,7 +16,6 @@ router.get('/', userAuth, (req, res) => {
     }
     let success = req.flash('success')
     success = (success == undefined || success.length == 0) ? undefined : success
-    console.log(success)
     res.render('users/schedule/index', { userName: req.session.user.name, adm, success })
 })
 

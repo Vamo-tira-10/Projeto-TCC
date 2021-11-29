@@ -23,7 +23,7 @@ router.get('/panel', userAuth, (req, res) => {
             const users = []
             data.rows.forEach(row => {
                 const date = new Date(row.createdAt)
-                const dateFormated = date.toLocaleDateString('pt-BR', {timeZone: 'UTC'});
+                const dateFormated = date.toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'});
                 const user = {
                     id: row.id,
                     name: row.name,

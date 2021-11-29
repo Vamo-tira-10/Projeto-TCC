@@ -68,7 +68,10 @@ app.use(session({
     secret: 'asjodjaso',
     resave: false,
     saveUninitialized: true,
-    rolling: true
+    rolling: true,
+    cookie: {
+        maxAge: 3600000
+    }
 }))
 app.use(flash())
 app.use(express.static('public')) //Middleware de conteúdo estático (CSS, JS)
@@ -107,6 +110,3 @@ server.listen(5050, () => {
     console.log('Servidor executando')
     console.log('http://localhost:5050')
 })
-
-
-

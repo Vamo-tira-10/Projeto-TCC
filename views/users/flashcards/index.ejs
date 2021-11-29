@@ -45,12 +45,16 @@
                     <div class="column is-9">
                         <div class="box" id="contacts" data-example>
                             <h1 class="title is-4 mb-2">Meus Flash Cards</h1>
-                            <% if (flashcards.length> 0) { %>
+                            <% if (flashCardsFormated.length > 0) { %>
                                 <div class="list">
-                                    <% flashcards.forEach(flashcard => { %>
+                                    <% flashCardsFormated.forEach(flashcard => { %>
                                         <div class="list-item">
                                             <div class="list-item-content">
                                                 <div class="list-item-title"> <%= flashcard.question %> </div>
+                                                <div class="list-item-description mt-2">
+                                                    <div class="tag is-rounded">Data de criação: <%= flashcard.createdAt %></div>
+                                                    <div class="tag is-rounded">Última atualização: <%= flashcard.updatedAt %></div>
+                                                </div>
                                             </div>
     
                                             <div class="list-item-controls">
@@ -113,22 +117,27 @@
                 </div>
                 <button class="modal-close is-large" aria-label="close"></button>
             </div>
-            <% flashcards.forEach(flashcard => { %>
+            <% flashCardsFormated.forEach(flashcard => { %>
                 <div id="modal-resposta-<%= flashcard.id %>" class="modal modal-fx-fadeInScale">
                     <div class="modal-background"></div>
-                    <div class="modal-content">
+                    <div class="modal-content" id="contentAnswer<%= flashcard.id %>">
                         <div class="box">
                             <div>
                                 <p class="title"> <%= flashcard.question %> </p>
                                 <div class="field">
                                     <label class="label">Resposta</label>
                                     <div class="control">
-                                        <input type="text" class="input" name="answer" placeholder="Digite a resposta da pergunta">
+                                        <input type="text" class="input" name="answer" id="answer<%= flashcard.id %>" placeholder="Digite a resposta da pergunta">
                                     </div>
                                 </div>
-                                <div class="field" style="display: none;">
-                                    <p class="subtitle">Resposta Correta: <%= flashcard.answer %> </p>
-                                </div>
+                                <article class="message is-success field" style="display: none;">
+                                    <div class="message-header">
+                                      <p>A resposta correta é:</p>
+                                    </div>
+                                    <div class="message-body">
+                                        <%= flashcard.answer %>
+                                    </div>
+                                </article>
                                 <div>
                                     <a id="button-<%= flashcard.id %>" class="button is-success mt-4 is-fullwidth" onclick="showAnswer('<%= flashcard.id %>')">Responder</a>
                                 </div>
@@ -139,23 +148,23 @@
                 </div>
                 <div id="modal-resposta-edit-<%= flashcard.id %>" class="modal modal-fx-fadeInScale">
                     <div class="modal-background"></div>
-                    <div class="modal-content">
+                    <div class="modal-content" id="contentEdit<%= flashcard.id %>">
                         <div class="box">
-                            <form action="/users/panel/flashcards/edit/<%= flashcard.id %>" method="post">
+                            <form action="/users/panel/flashcards/edit/<%= flashcard.id %>" method="post" id="formEdit<%= flashcard.id %>">
                                 <div class="field">
                                     <label class="label">Pergunta</label>
                                     <div class="control">
-                                        <input type="text" class="input" name="question" value="<%= flashcard.question %>" placeholder="Digite a pergunta">
+                                        <input type="text" class="input" name="question" value="<%= flashcard.question %>" id="questionEdit<%= flashcard.id %>" placeholder="Digite a pergunta">
                                     </div>
                                 </div>
                                 <div class="field">
                                     <label class="label">Resposta Correta</label>
                                     <div class="control">
-                                        <input type="text" class="input" name="answer" value="<%= flashcard.answer %>" placeholder="Digite a resposta da pergunta">
+                                        <input type="text" class="input" name="answer" value="<%= flashcard.answer %>"  id="answerEdit<%= flashcard.id %>" placeholder="Digite a resposta da pergunta">
                                     </div>
                                 </div>
                                 <div>
-                                    <button class="button is-success mt-4 is-fullwidth">Editar</button>
+                                    <button class="button is-success mt-4 is-fullwidth" onclick="validEdit(event, '<%= flashcard.id %>')">Editar</button>
                                 </div>
                             </form>
                         </div>
@@ -179,17 +188,65 @@
                     })
                 })
 
-                showAnswer = (id) => {
-                    let button = document.querySelector(`#button-${id}`)
-                    document.querySelector(`#modal-resposta-${id} [name=answer]`).readOnly = true
-                    document.querySelectorAll(`#modal-resposta-${id} .field`)[1].style = 'display: block;'
-                    button.innerHTML = 'Fechar'
-                    button.classList.remove('is-success')
-                    button.classList.add('is-info')
-                    button.onclick = (e) => {
-                        document.querySelector(`#modal-resposta-${id}`).classList.remove('is-active')
-                        window.location.reload()
+                validEdit = (e, id) => {
+                    let content = document.querySelector(`#contentEdit${id}`)
+                    if (validator.isEmpty(document.querySelector(`#questionEdit${id}`).value) || validator.isEmpty(document.querySelector(`#answerEdit${id}`).value)) {
+                        content.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        content.style.transform = 'translate3d(0, 0, 0)';
+                        content.style.backfaceVisibility = 'hidden';
+                        content.style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                        e.preventDefault()
                     }
+                    content.addEventListener('animationend', () => {
+                        content.style.animation = '';
+                        content.style.transform = '';
+                        content.style.backfaceVisibility = '';
+                        content.style.perspective = '';
+                    })
+                }
+
+                showAnswer = (id) => {
+                    let content = document.querySelector(`#contentAnswer${id}`)
+                    if (validator.isEmpty(document.querySelector(`#answer${id}`).value)) {
+                        content.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                        content.style.transform = 'translate3d(0, 0, 0)';
+                        content.style.backfaceVisibility = 'hidden';
+                        content.style.perspective = '1000px';
+                        if (document.querySelector('.notification') == undefined) {
+                            bulmaToast.toast({
+                                message: 'Preencha todos os campos!',
+                                type: 'is-danger',
+                                duration: 3000,
+                                animate: { in: 'fadeIn', out: 'fadeOut' }
+                            })
+                        }
+                    }
+                    else {
+                        let button = document.querySelector(`#button-${id}`)
+                        document.querySelector(`#modal-resposta-${id} [name=answer]`).readOnly = true
+                        document.querySelectorAll(`#modal-resposta-${id} .field`)[1].style = 'display: block;'
+                        button.innerHTML = 'Fechar'
+                        button.classList.remove('is-success')
+                        button.classList.add('is-info')
+                        button.onclick = (e) => {
+                            document.querySelector(`#modal-resposta-${id}`).classList.remove('is-active')
+                            window.location.reload()
+                        }
+                    }
+                    content.addEventListener('animationend', () => {
+                        content.style.animation = '';
+                        content.style.transform = '';
+                        content.style.backfaceVisibility = '';
+                        content.style.perspective = '';
+                    })
                 }
 
                 document.querySelector('#modal-cadastro').addEventListener('submit', (e) => {

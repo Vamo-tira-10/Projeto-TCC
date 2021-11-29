@@ -132,6 +132,46 @@
                         if (!moment(document.querySelector('#timeEnd').value + ':00', 'HH:mm:ss',true).isValid()) {
                             errorFormat = true
                         }
+                        let dataStart = document.querySelector('#dateStart').value
+                        let dataEnd = document.querySelector('#dateEnd').value
+                        let dayStart = dataStart.split('/')[0]
+                        let monthStart = dataStart.split('/')[1]
+                        let yearStart = dataStart.split('/')[2]
+                        let dayEnd = dataEnd.split('/')[0]
+                        let monthEnd = dataEnd.split('/')[1]
+                        let yearEnd = dataEnd.split('/')[2]
+                        if (yearStart == yearEnd) {
+                            if (monthEnd < monthStart) {
+                                errorFormat = true
+                            }
+                            if (monthStart == monthEnd) {
+                                if (dayEnd < dayStart) {
+                                    errorFormat = true
+                                }
+                            }
+                        }
+                        if (yearEnd < yearStart) {
+                            errorFormat = true
+                        }
+                        let timeStart = document.querySelector('#timeStart').value
+                        let timeEnd = document.querySelector('#timeEnd').value
+                        let hourStart = timeStart.split(':')[0]
+                        let minuteStart = timeStart.split(':')[1]
+                        let hourEnd = timeEnd.split(':')[0]
+                        let minuteEnd = timeEnd.split(':')[1]
+                        if (dayStart == dayEnd && monthStart == monthEnd && yearStart == yearEnd) {
+                            if (hourStart == hourEnd) {
+                                if (minuteEnd < minuteStart) {
+                                    errorFormat = true
+                                }
+                            }
+                            if (hourEnd < hourStart) {
+                                errorFormat = true
+                            }
+                            if (hourStart == hourEnd && minuteStart == minuteEnd) {
+                                errorFormat = true
+                            }
+                        }
                     }
 
                     if (errorSubmit) {
@@ -194,7 +234,7 @@
                             document.querySelector('#delete').style.display = 'none'
                             document.querySelector('#modal-id').classList.add('is-active')
                             document.querySelector('#title').value = ''
-                            document.querySelector('#dateStart').value = new Date(info.dateStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+                            document.querySelector('#dateStart').value = new Date(info.dateStr).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
                             document.querySelector('#dateEnd').value = ''
                             document.querySelector('#timeStart').value = ''
                             document.querySelector('#timeEnd').value = ''
@@ -210,8 +250,8 @@
                             document.querySelector('#delete').style.display = 'block'
                             document.querySelector('#modal-id').classList.add('is-active')
                             document.querySelector('#title').value = info.event.title
-                            document.querySelector('#dateStart').value = new Date(info.event.startStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
-                            document.querySelector('#dateEnd').value = new Date(info.event.endStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
+                            document.querySelector('#dateStart').value = new Date(info.event.startStr).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
+                            document.querySelector('#dateEnd').value = new Date(info.event.endStr).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
                             document.querySelector('#timeStart').value = info.event.startStr.split('T')[1].split('-')[0].slice(0, -3)
                             document.querySelector('#timeEnd').value = info.event.endStr.split('T')[1].split('-')[0].slice(0, -3)
                         }
