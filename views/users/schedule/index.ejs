@@ -234,7 +234,7 @@
                             document.querySelector('#delete').style.display = 'none'
                             document.querySelector('#modal-id').classList.add('is-active')
                             document.querySelector('#title').value = ''
-                            document.querySelector('#dateStart').value = new Date(info.dateStr).toLocaleDateString('pt-BR', {timeZone: 'America/Sao_Paulo'})
+                            document.querySelector('#dateStart').value = new Date(info.dateStr).toLocaleDateString('pt-BR', {timeZone: 'UTC'})
                             document.querySelector('#dateEnd').value = ''
                             document.querySelector('#timeStart').value = ''
                             document.querySelector('#timeEnd').value = ''
