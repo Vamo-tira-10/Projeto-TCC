@@ -81,13 +81,13 @@ router.post('/save', (req, res) => {
     const passwordHashed = bcrypt.hashSync(password, 10)
     User.findOne({
         where: {
-            email: email
+            email: email.toLowerCase()
         }
     }).then(user => {
         if (user == undefined) {
             User.create({
                 name: name,
-                email: email,
+                email: email.toLowerCase(),
                 password: passwordHashed,
                 adm: 0
             }).then(() => {
@@ -124,7 +124,7 @@ router.post('/auth', (req, res) => {
     const { email, password } = req.body
     User.findOne({
         where: {
-            email: email
+            email: email.toLowerCase()
         }
     }).then(user => {
         if (user != undefined) {
@@ -132,7 +132,7 @@ router.post('/auth', (req, res) => {
                 const userAuthenticated = {
                     id: user.id,
                     name: user.name,
-                    email: user.email,
+                    email: user.email.toLowerCase(),
                     adm: user.adm
                 }
                 req.session.user = userAuthenticated

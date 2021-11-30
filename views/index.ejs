@@ -114,12 +114,21 @@
                             </div>
                             <label class="label">Senha</label>
                             <div class="field">
-                                <p class="control has-icons-left">
-                                    <input type="password" class="input is-primary" placeholder="Senha" name="password" id="password">
+                                <div class="control has-icons-left">
+                                    <input class="input is-primary" type="password" name="password" id="password" placeholder="Senha">
                                     <span class="icon is-small is-left">
                                         <i class="fas fa-lock"></i>
                                     </span>
-                                </p>
+                                    <div class="mt-4">
+                                        <div id="pswmeter"></div>
+                                    </div>
+                                    <div class="has-text-grey is-size-7 mt-2">
+                                        1) Pelo menos uma letra minúscula.
+                                        2) Pelo menos uma letra maiúscula.
+                                        3) Pelo menos um número.
+                                        4) Pelo menos 8 caracteres.
+                                    </div>
+                                </div>
                             </div>
                             <div class="field has-text-centered">
                                 <button class="button is-primary mt-4 is-fullwidth">Cadastrar-se</button>
@@ -162,6 +171,22 @@
         </script>
     <% } %>
     <script>
+        const myPassMeter = passwordStrengthMeter({
+            containerElement: '#pswmeter',
+            passwordInput: '#password',
+            showMessage: true,
+            messageContainer: '#pswmeter-message',
+            messagesList: [
+                'Senha vazia',
+                'Senha muito simples',
+                'Senha fraca',
+                'Senha razoável',
+                'Senha forte'
+            ],
+            colorScore2: 'hsl(48, 100%, 67%)',
+            colorScore3: 'hsl(141, 71%, 48%)',
+            colorScore4: 'hsl(141, 50%, 48%)'
+        });
         const form = document.querySelector('form')
         form.onsubmit = (e) => {
             e.preventDefault()
@@ -183,7 +208,23 @@
                 }
             }
             else {
-                form.submit()
+                if (validator.isStrongPassword(password, {minSymbols: 0})) {
+                    form.submit()
+                }
+                else {
+                    form.style.animation = 'shake 0.82s cubic-bezier(.36,.07,.19,.97) both';
+                    form.style.transform = 'translate3d(0, 0, 0)';
+                    form.style.backfaceVisibility = 'hidden';
+                    form.style.perspective = '1000px';
+                    if (document.querySelector('.notification') == undefined) {
+                        bulmaToast.toast({
+                            message: 'Senha não atende os requisitos!',
+                            type: 'is-danger',
+                            duration: 3000,
+                            animate: { in: 'fadeIn', out: 'fadeOut' }
+                        })
+                    }
+                }
             }
         }
         form.onanimationend = (e) => {
